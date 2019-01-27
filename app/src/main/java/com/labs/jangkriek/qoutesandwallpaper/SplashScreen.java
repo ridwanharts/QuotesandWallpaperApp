@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -20,6 +22,9 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 
         fromLeftToRight = AnimationUtils.loadAnimation(this, R.anim.from_left_to_right);
@@ -51,9 +56,9 @@ public class SplashScreen extends AppCompatActivity {
         tvN.setAlpha(0);
         tvWall.setAlpha(0);
 
-        tvQuotes.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500);
-        tvN.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(600);
-        tvWall.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700);
+        tvQuotes.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900);
+        tvN.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1000);
+        tvWall.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1100);
 
         final Intent i = new Intent(this, MainActivity.class);
         Thread timer = new Thread(){
