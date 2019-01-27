@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_logo"/>
+    <item
+        android:width="200dp"
+        android:height="250dp"
+        android:drawable="@drawable/ic_logo"
+        android:gravity="center_horizontal"/>
+
+    <item
+        android:width="200dp"
+        android:height="250dp"
+        android:bottom="-40dp"
+        android:drawable="@drawable/ic_logo"
+        android:gravity="bottom|center_horizontal"
+        />
+</selector>

@@ -1,7 +1,9 @@
-package com.labs.jangkriek.qoutesandwallpaper;
+package com.labs.jangkriek.qoutesandwallpaper.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.labs.jangkriek.qoutesandwallpaper.R;
 
 public class MainActivity extends AppCompatActivity {
 
