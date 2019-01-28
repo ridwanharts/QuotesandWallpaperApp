@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
+        android:id="@+id/appbarlay"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/app_name"
             app:layout_scrollFlags="scroll|enterAlways"
+            app:title="@string/app_name"
             app:titleTextColor="#FFF">
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main"/>
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/appbarlay">
+        <include layout="@layout/content_main" />
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
-        app:menu="@menu/nav_menu"
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
         app:itemIconTint="#FFF"
         app:itemTextColor="#FFF"
         app:labelVisibilityMode="selected"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:layout_gravity="bottom">
+        app:menu="@menu/nav_menu">
 
     </android.support.design.widget.BottomNavigationView>
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

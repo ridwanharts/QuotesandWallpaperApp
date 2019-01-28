@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/ic_verified_user"
+            android:layout_gravity="center"
+            android:id="@+id/iv_user"/>
+
+        <TextView
+            android:id="@+id/username_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/email_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username@email"
+            android:padding="3dp"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/logout_google"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:elevation="5dp"
+            android:text="Log Out" />
+
+
+    </LinearLayout>
+</RelativeLayout>

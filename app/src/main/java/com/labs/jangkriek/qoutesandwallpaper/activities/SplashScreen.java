@@ -1,4 +1,4 @@
-package com.labs.jangkriek.qoutesandwallpaper;
+package com.labs.jangkriek.qoutesandwallpaper.activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.activities.MainActivity;
 
 public class SplashScreen extends AppCompatActivity {
