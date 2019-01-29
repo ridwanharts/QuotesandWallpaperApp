@@ -3,6 +3,7 @@
     package="com.labs.jangkriek.qoutesandwallpaper">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2732887939805010~5353004466"/>
+
         <activity android:name=".activities.MainActivity"></activity>
         <activity android:name=".activities.SplashScreen">
             <intent-filter>
@@ -20,6 +26,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.WallpaperActivity"></activity>
+
+        <provider
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:authorities="${applicationId}.provider"
+            android:name="android.support.v4.content.FileProvider">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATH"
+                android:resource="@xml/provider_path"/>
+        </provider>
     </application>
 
 </manifest>

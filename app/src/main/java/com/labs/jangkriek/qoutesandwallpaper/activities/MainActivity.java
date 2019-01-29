@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.MobileAds;
 import com.labs.jangkriek.qoutesandwallpaper.fragment.FavFragment;
 import com.labs.jangkriek.qoutesandwallpaper.fragment.HomeFragment;
 import com.labs.jangkriek.qoutesandwallpaper.R;
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this,
+                "ca-app-pub-2732887939805010~5353004466");
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
