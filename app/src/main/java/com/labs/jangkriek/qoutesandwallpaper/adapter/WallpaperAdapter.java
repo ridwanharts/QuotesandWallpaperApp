@@ -97,20 +97,20 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
             super(itemView);
             tvName = itemView.findViewById(R.id.txt_view_title);
             ivThumb = itemView.findViewById(R.id.iv_imagevwall);
-            /*checkBox = itemView.findViewById(R.id.fav_button);
+            checkBox = itemView.findViewById(R.id.fav_button);
             buttonShare = itemView.findViewById(R.id.share_button);
-            buttonDown = itemView.findViewById(R.id.download_button);*/
+            buttonDown = itemView.findViewById(R.id.download_button);
 
-            /*checkBox.setOnCheckedChangeListener(this);
+            checkBox.setOnCheckedChangeListener(this);
             buttonDown.setOnClickListener(this);
-            buttonShare.setOnClickListener(this);*/
+            buttonShare.setOnClickListener(this);
         }
 
 
         @Override
         public void onClick(View v) {
 
-            /*switch(v.getId()){
+            switch(v.getId()){
                 case R.id.share_button:
                     shareWallpaper(wallpaperList.get(getAdapterPosition()));
                     Toast.makeText(context, "share images", Toast.LENGTH_SHORT).show();
@@ -122,7 +122,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
                 case R.id.fav_button:
                         Toast.makeText(context, "Add to favurite", Toast.LENGTH_SHORT).show();
                     break;
-            }*/
+            }
 
         }
 

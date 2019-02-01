@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.HomeFragment">
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/topNav"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/appbarlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/sub_bg"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/nav_menu_atas">
+
+    </android.support.design.widget.BottomNavigationView>
+
+    <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topNav"
+            android:orientation="vertical">
+
+            <include layout="@layout/content_main" />
+
+    </LinearLayout>
+    <!--<ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/topNav"
+        android:layout_margin="5dp"
+        android:padding="3dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_view">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />-->
+
+</RelativeLayout>

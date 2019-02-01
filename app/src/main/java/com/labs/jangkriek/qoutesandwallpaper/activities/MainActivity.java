@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.MobileAds;
 import com.labs.jangkriek.qoutesandwallpaper.fragment.FavFragment;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Fragment fr = new HomeFragment();
         switch (menuItem.getItemId()){
             case R.id.nav_home:
+                Toast.makeText(getApplicationContext(),"Quote", Toast.LENGTH_SHORT).show();
                 fr = new HomeFragment();
                 break;
             case R.id.nav_fav:

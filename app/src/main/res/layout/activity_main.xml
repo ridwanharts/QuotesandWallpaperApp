@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:id="@+id/appbarlay"
         app:elevation="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/bg_transparan">
 
         <LinearLayout
@@ -54,24 +54,10 @@
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/topNav"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/appbarlay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/sub_bg"
-        app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/nav_menu_atas">
-
-    </android.support.design.widget.BottomNavigationView>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/topNav">
+        android:layout_below="@+id/appbarlay">
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="match_parent"
