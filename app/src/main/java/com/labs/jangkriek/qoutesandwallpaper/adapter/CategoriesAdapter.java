@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.labs.jangkriek.qoutesandwallpaper.R;
@@ -46,8 +47,10 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     @Override
     public void onBindViewHolder(CategoriesAdapter.CategoryViewHolder categoryViewHolder, int i) {
         Category cat = categoryList.get(i);
-        categoryViewHolder.tvName.setText(cat.name);
-        Glide.with(context).load(cat.thumb).into(categoryViewHolder.ivThumb);
+        categoryViewHolder.tvName.setText(cat.name.toUpperCase());
+        RequestOptions myOptions = new RequestOptions()
+                .centerCrop();
+        Glide.with(context).asBitmap().apply(myOptions).load(cat.thumb).into(categoryViewHolder.ivThumb);
 
     }
 
@@ -81,6 +84,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
             Category cat = categoryList.get(pos);
             Intent i = new Intent(context, WallpaperActivity.class);
             i.putExtra("category", cat.name);
+            i.putExtra("logo", cat.thumb);
+            i.putExtra("ig", cat.ig);
+            i.putExtra("fb", cat.fb);
             context.startActivity(i);
         }
     }

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +43,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -68,7 +71,9 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
     public void onBindViewHolder(WallpaperAdapter.WallViewHolder categoryViewHolder, int i) {
         Wallpaper wall = wallpaperList.get(i);
         categoryViewHolder.tvName.setText(wall.title);
-        Glide.with(context).load(wall.url).into(categoryViewHolder.ivThumb);
+        RequestOptions myOptions = new RequestOptions()
+                .centerCrop();
+        Glide.with(context).asBitmap().apply(myOptions).load(wall.url).into(categoryViewHolder.ivThumb);
 
         if (wall.isFav){
             categoryViewHolder.checkBox.setChecked(true);
@@ -92,38 +97,42 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
             super(itemView);
             tvName = itemView.findViewById(R.id.txt_view_title);
             ivThumb = itemView.findViewById(R.id.iv_imagevwall);
-            checkBox = itemView.findViewById(R.id.fav_button);
+            /*checkBox = itemView.findViewById(R.id.fav_button);
             buttonShare = itemView.findViewById(R.id.share_button);
-            buttonDown = itemView.findViewById(R.id.download_button);
+            buttonDown = itemView.findViewById(R.id.download_button);*/
 
-            checkBox.setOnCheckedChangeListener(this);
+            /*checkBox.setOnCheckedChangeListener(this);
             buttonDown.setOnClickListener(this);
-            buttonShare.setOnClickListener(this);
+            buttonShare.setOnClickListener(this);*/
         }
 
 
         @Override
         public void onClick(View v) {
 
-            switch(v.getId()){
+            /*switch(v.getId()){
                 case R.id.share_button:
                     shareWallpaper(wallpaperList.get(getAdapterPosition()));
+                    Toast.makeText(context, "share images", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.download_button:
                     downloadWallpaper(wallpaperList.get(getAdapterPosition()));
+                    Toast.makeText(context, "Download complete", Toast.LENGTH_SHORT).show();
                     break;
-            }
+                case R.id.fav_button:
+                        Toast.makeText(context, "Add to favurite", Toast.LENGTH_SHORT).show();
+                    break;
+            }*/
 
         }
 
-        private void shareWallpaper(Wallpaper wallpaper) {
-            progressBar = (ProgressBar)((Activity) context).findViewById(R.id.pb2);
-            progressBar.setVisibility(View.VISIBLE);
-            Glide.with(context).asBitmap().load(wallpaper.url)
+        private void shareWallpaper(Wallpaper w) {
+            RequestOptions myOptions = new RequestOptions()
+                    .centerCrop();
+            Glide.with(context).asBitmap().apply(myOptions).load(w.url)
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            progressBar.setVisibility(View.GONE);
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("image/*");
                             i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(resource));
@@ -134,28 +143,31 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
         }
 
         private void downloadWallpaper(final Wallpaper wallpaper){
-            progressBar = (ProgressBar)((Activity) context).findViewById(R.id.pb2);
-            progressBar.setVisibility(View.VISIBLE);
-            Glide.with(context).asBitmap().load(wallpaper.url)
+
+            RequestOptions myOptions = new RequestOptions()
+                    .centerCrop();
+            Glide.with(context).asBitmap().apply(myOptions).load(wallpaper.url)
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            progressBar.setVisibility(View.GONE);
                             Intent i = new Intent(Intent.ACTION_VIEW);
-                            Uri uri = saveWallpaperGetUri(resource, wallpaper.id);
-                            if (uri!=null){
-                                i.setDataAndType(uri, "image/*");
+                            Uri uri = Uri.parse(saveWallpaper(resource, wallpaper.id));
+                            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                            if (uri != null) {
+                                //saveWallpaper(resource, wallpaper.id);
+                                i.setDataAndType(Uri.parse(saveWallpaper(resource, wallpaper.id)), "image/*");
                                 context.startActivity(Intent.createChooser(i, "Quotes App"));
                             }
-                            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
                         }
                     });
         }
 
+        private String saveWallpaper(Bitmap bitmap, String id){
 
-        private Uri saveWallpaperGetUri(Bitmap bitmap, String id){
-            if(ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                if(ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            if(ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                if(ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                     Intent i = new Intent();
                     i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                     Uri uri = Uri.fromParts("package", context.getPackageName(), null);
@@ -163,29 +175,44 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
                     context.startActivity(i);
 
                 }else {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
                 }
                 return null;
             }
 
-            File folder = new File(Environment.getExternalStorageDirectory().toString()+"/Download");
-            folder.mkdirs();
-            Date currentTime = Calendar.getInstance().getTime();
-            File file = new File(folder, "images_quote" + currentTime + ".jpg");
-            try {
-                FileOutputStream out = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                out.flush();
-                out.close();
+            String savedImagePath = null;
 
-                return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            String imageFileName = "JPEG_" + id + ".jpg";
+            File storageDir = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                            + "/QuotesApp");
+            boolean success = true;
+            if (!storageDir.exists()) {
+                success = storageDir.mkdirs();
             }
-            return null;
+            if (success) {
+                File imageFile = new File(storageDir, imageFileName);
+                savedImagePath = imageFile.getAbsolutePath();
+                try {
+                    OutputStream fOut = new FileOutputStream(imageFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+                    fOut.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // Add the image to the system gallery
+                galleryAddPic(savedImagePath);
+            }
+            return savedImagePath;
+        }
+
+        private void galleryAddPic(String imagePath) {
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            File f = new File(imagePath);
+            Uri contentUri = Uri.fromFile(f);
+            mediaScanIntent.setData(contentUri);
+            context.sendBroadcast(mediaScanIntent);
         }
 
         private Uri getLocalBitmapUri(Bitmap bmp){
@@ -227,6 +254,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
                 dbFav.child(wall.id).setValue(wall);
             }else {
                 dbFav.child(wall.id).setValue(null);
+                Toast.makeText(context, "remove from favourite", Toast.LENGTH_SHORT).show();
             }
 
         }

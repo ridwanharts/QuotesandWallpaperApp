@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.labs.jangkriek.qoutesandwallpaper.R;
+import com.labs.jangkriek.qoutesandwallpaper.Utility;
 import com.labs.jangkriek.qoutesandwallpaper.adapter.CategoriesAdapter;
 import com.labs.jangkriek.qoutesandwallpaper.model.Category;
 
@@ -35,6 +36,7 @@ public class HomeFragment extends Fragment {
     private List<Category> categoryList;
     private RecyclerView recyclerView;
     private CategoriesAdapter categoriesAdapter;
+    private int mNoOfColumns;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -56,7 +58,9 @@ public class HomeFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+        mNoOfColumns = Utility.calculateNoOfColumns(getActivity());
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), mNoOfColumns));
 
         categoryList = new ArrayList<>();
         categoriesAdapter = new CategoriesAdapter(getActivity(), categoryList);
@@ -73,8 +77,10 @@ public class HomeFragment extends Fragment {
                         String name = ds.getKey();
                         String desc = ds.child("desc").getValue(String.class);
                         String thumb = ds.child("thumbnail").getValue(String.class);
+                        String ig = ds.child("ig").getValue(String.class);
+                        String fb = ds.child("fb").getValue(String.class);
 
-                        Category cat = new Category(name, desc, thumb);
+                        Category cat = new Category(name, desc, thumb, ig, fb);
                         categoryList.add(cat);
                     }
                     categoriesAdapter.notifyDataSetChanged();

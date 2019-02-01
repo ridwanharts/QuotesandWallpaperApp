@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Quotes and Wallpaper</string>
+    <string name="app_name">Quotes</string>
 
     <string name="nav_home">Home</string>
     <string name="nav_fav">Favourites</string>

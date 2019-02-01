@@ -7,7 +7,7 @@ public class Wallpaper {
     @Exclude
     public String id;
 
-    public String title, desc, url;
+    public String title, desc, url, ig, fb;
 
     @Exclude
     public String category;
@@ -16,10 +16,12 @@ public class Wallpaper {
     public boolean isFav = false;
 
 
-    public Wallpaper(String id, String title, String desc, String url, String category) {
+    public Wallpaper(String id, String title, String desc, String ig, String fb, String url, String category) {
         this.id = id;
         this.title = title;
         this.desc = desc;
+        this.ig = ig;
+        this.fb = fb;
         this.url = url;
         this.category = category;
     }

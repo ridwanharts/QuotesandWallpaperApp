@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@drawable/br_home"
+        android:icon="@drawable/br_quot"
         android:id="@+id/nav_home"
         android:title="@string/nav_home"
         android:iconTint="@color/white"
         />
     <item
-        android:icon="@drawable/br_fav"
+        android:icon="@drawable/br_quran"
         android:id="@+id/nav_fav"
         android:title="@string/nav_fav"
         android:iconTint="@color/white"
         />
     <item
-        android:icon="@drawable/br_user"
+        android:icon="@drawable/br_hadist"
         android:id="@+id/nav_set"
         android:title="@string/nav_set"
         android:iconTint="@color/white"

@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="colorBackground">#D34A16</color>
+    <color name="colorPrimary">#efebe9</color>
+    <color name="colorPrimaryDark">#a6d4c2</color>
+    <color name="bottomNav">#1e88e5</color>
+    <color name="colorAccent">#3d5afe</color>
+    <color name="colorBackground">#1976d2</color>
+    <color name="bg_transparan">#00ffffff</color>
+
+    <!--color untuk gradient tansition-->
+    <color name="purple_500">#0d47a1</color>
+    <color name="deep_purple_500">#1e88e5</color>
+    <color name="indigo_500">#1976d2</color>
+    <color name="blue_500">#2196f3</color>
+    <color name="cyan_500">#00bcd4</color>
+    <color name="light_blue_500">#03a9f4</color>
+
+    <color name="bg1">#a6d4c2</color>
+    <color name="bg2">#4a8195</color>
+    <color name="sub_bg">#191d1d1d</color>
+    <color name="bg_botnav">#2d607d8b</color>
+    <color name="white">#ffffff</color>
+
 </resources>

@@ -5,45 +5,93 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bggradient"
     tools:context=".activities.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:id="@+id/appbarlay"
+        app:elevation="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:background="@color/bg_transparan">
 
-        <android.support.v7.widget.Toolbar
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:title="@string/app_name"
-            app:titleTextColor="#FFF">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        </android.support.v7.widget.Toolbar>
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/app_name"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="8dp"
+                        android:padding="8dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_verified_user"/>
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.Toolbar>
+        </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/appbarlay">
-        <include layout="@layout/content_main" />
-    </LinearLayout>
-
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottomNav"
+        android:id="@+id/topNav"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/appbarlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        app:itemIconTint="#FFF"
-        app:itemTextColor="#FFF"
-        app:labelVisibilityMode="selected"
-        app:menu="@menu/nav_menu">
+        android:background="@color/sub_bg"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/nav_menu_atas">
 
     </android.support.design.widget.BottomNavigationView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topNav">
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottomNav"
+            android:orientation="vertical">
+
+            <include layout="@layout/content_main" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_botnav"
+            app:labelVisibilityMode="selected"
+            app:menu="@menu/nav_menu">
+
+        </android.support.design.widget.BottomNavigationView>
+    </RelativeLayout>
 </RelativeLayout>

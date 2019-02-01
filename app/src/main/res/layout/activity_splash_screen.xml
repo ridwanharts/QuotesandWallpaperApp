@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".activities.SplashScreen">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/iv_splash"
-        android:background="@color/colorPrimaryDark"/>
+        android:id="@+id/iv_splash" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_height="150dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_logo" />
+            android:src="@drawable/logo_quotes" />
 
         <TextView
             android:id="@+id/txt_quotes"
@@ -34,7 +34,7 @@
 
             android:text="Quotes"
             android:textAlignment="center"
-            android:textColor="#FFF"
+            android:textColor="@color/bottomNav"
             android:textSize="30sp" />
 
         <TextView
@@ -43,17 +43,19 @@
             android:layout_height="wrap_content"
             android:text="and"
             android:textAlignment="center"
-            android:textColor="#FFF"
+            android:visibility="invisible"
+            android:textColor="@color/bottomNav"
             android:textSize="25sp" />
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/txt_wallpaper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_n"
             android:text="Wallpaper"
             android:textAlignment="center"
-            android:textColor="#FFF"
+            android:textColor="@color/bottomNav"
             android:textSize="30sp" />
 
     </LinearLayout>

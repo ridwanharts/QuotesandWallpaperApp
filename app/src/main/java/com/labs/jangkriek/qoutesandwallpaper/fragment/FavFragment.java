@@ -84,9 +84,11 @@ public class FavFragment extends Fragment {
                         String id = wall.getKey();
                         String title = wall.child("title").getValue(String.class);
                         String desc = wall.child("desc").getValue(String.class);
+                        String ig = wall.child("ig").getValue(String.class);
+                        String fb = wall.child("fb").getValue(String.class);
                         String url = wall.child("url").getValue(String.class);
 
-                        Wallpaper w = new Wallpaper(id, title, desc, url, cat.getKey());
+                        Wallpaper w = new Wallpaper(id, title, desc, ig, fb, url, cat.getKey());
                         w.isFav = true;
                         favWallpaper.add(w);
                     }
