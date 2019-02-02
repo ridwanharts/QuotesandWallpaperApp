@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/br_quot"
+        android:icon="@drawable/quote1"
         android:id="@+id/nav_quote"
         android:title="Quotes"
-        android:iconTint="@color/white"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
         />
     <item
-        android:icon="@drawable/br_quran"
+        android:icon="@drawable/calendar"
         android:id="@+id/nav_quran"
         android:title="Quran"
-        android:iconTint="@color/white"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
         />
     <item
-        android:icon="@drawable/br_hadist"
+        android:icon="@drawable/openbook"
         android:id="@+id/nav_hadist"
         android:title="Hadist"
-        android:iconTint="@color/white"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
         />
 </menu>

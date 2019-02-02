@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.MobileAds;
@@ -17,15 +20,19 @@ import com.labs.jangkriek.qoutesandwallpaper.fragment.SettingFragment;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
+    TextView tvTitle;
+    RelativeLayout rel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         MobileAds.initialize(this,
                 "ca-app-pub-2732887939805010~5353004466");
 
+        tvTitle = findViewById(R.id.titleAtas);
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         showFragment(new HomeFragment());
@@ -34,16 +41,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Fragment fr = new HomeFragment();
+        rel = findViewById(R.id.relative_bg);
         switch (menuItem.getItemId()){
             case R.id.nav_home:
-                Toast.makeText(getApplicationContext(),"Quote", Toast.LENGTH_SHORT).show();
                 fr = new HomeFragment();
+                tvTitle.setText("Sobat Hijrah");
+                //rel.setBackgroundResource(R.drawable.bggradient);
                 break;
             case R.id.nav_fav:
                 fr = new FavFragment();
+                tvTitle.setText("Favourite");
+                //rel.setBackgroundResource(R.drawable.bggradientfav);
                 break;
             case R.id.nav_set:
                 fr = new SettingFragment();
+                tvTitle.setText("Setting");
+                //root.setBackgroundColor((R.drawable.bggradient));
                 break;
         }
         showFragment(fr);

@@ -16,7 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/sub_bg"
-        app:labelVisibilityMode="unlabeled"
+        app:labelVisibilityMode="selected"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:menu="@menu/nav_menu_atas">
 
     </android.support.design.widget.BottomNavigationView>
