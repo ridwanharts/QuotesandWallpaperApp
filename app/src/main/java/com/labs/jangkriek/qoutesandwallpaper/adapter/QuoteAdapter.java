@@ -119,10 +119,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.WallViewHold
                     downloadWallpaper(wallpaperList.get(getAdapterPosition()));
                     Toast.makeText(context, "Download complete", Toast.LENGTH_SHORT).show();
                     break;
-                case R.id.iv_imagevwall:
-                    Intent i = new Intent(context, SplashScreen.class);
-                    context.startActivity(i);
-                    break;
             }
             int pos = getAdapterPosition();
             Wallpaper img = wallpaperList.get(pos);

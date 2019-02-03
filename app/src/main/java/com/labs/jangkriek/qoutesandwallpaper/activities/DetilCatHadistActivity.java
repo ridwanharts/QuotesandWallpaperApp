@@ -1,5 +1,6 @@
 package com.labs.jangkriek.qoutesandwallpaper.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -23,7 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.Utility;
+import com.labs.jangkriek.qoutesandwallpaper.adapter.HadistAdapter;
 import com.labs.jangkriek.qoutesandwallpaper.adapter.QuoteAdapter;
+import com.labs.jangkriek.qoutesandwallpaper.model.IsiHadist;
 import com.labs.jangkriek.qoutesandwallpaper.model.Wallpaper;
 
 import java.util.ArrayList;
@@ -31,14 +35,12 @@ import java.util.List;
 
 public class DetilCatHadistActivity extends AppCompatActivity {
 
-    <--TODO -->
     RecyclerView recyclerView;
-    List<Wallpaper> wallpaperList;
-    List<Wallpaper> favList;
-    QuoteAdapter adapter;
+    List<IsiHadist> wallpaperList;
+    List<IsiHadist> favList;
+    HadistAdapter adapter;
     DatabaseReference dbWallpaper, dbFav;
     ProgressBar progressBar;
-    ImageView ivLogo, ivIG, ivFB;
     int mNoOfColumns;
 
     @Override
@@ -46,7 +48,7 @@ public class DetilCatHadistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detil_cat_hadist);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_wall);
+        Toolbar toolbar = findViewById(R.id.toolbar_wall_hadist);
         // toolbar
         setSupportActionBar(toolbar);
 
@@ -58,75 +60,44 @@ public class DetilCatHadistActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String category = intent.getStringExtra("category");
-        final String thumb = intent.getStringExtra("logo");
-        final String ig = intent.getStringExtra("ig");
-        final String fb = intent.getStringExtra("fb");
-
-        ivLogo = findViewById(R.id.logo_detail);
-        ivIG = findViewById(R.id.iv_source_ig);
-        ivFB = findViewById(R.id.iv_source_fb);
-
-        ivIG.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!ig.equals("#")){
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse("" + ig));
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(DetilCatQuoteActivity.this, "IG profile not available", Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-        });
-
-        ivFB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!fb.equals("#")){
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse("" + fb));
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(DetilCatQuoteActivity.this, "FB profile not available", Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-        });
 
         //Toast.makeText(DetilCatQuoteActivity.this, "link : " + thumb, Toast.LENGTH_SHORT).show();
-        Glide.with(DetilCatQuoteActivity.this).asBitmap().load(thumb).into(ivLogo);
-
 
         toolbar.setTitle(category);
-        TextView tvCatDetail = findViewById(R.id.tv_cat_detil);
+        TextView tvCatDetail = findViewById(R.id.tv_cat_detil_hadist);
         tvCatDetail.setText(category.toUpperCase());
 
         wallpaperList = new ArrayList<>();
         favList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recycler_view2);
+        recyclerView = findViewById(R.id.recycler_view_cat_hadist);
         recyclerView.setHasFixedSize(true);
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mNoOfColumns = Utility.calculateNoOfColumns(getApplicationContext());
+        mNoOfColumns = UtilityHadist.calculateNoOfColumns(getApplicationContext());
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, mNoOfColumns));
-        adapter = new QuoteAdapter(this, wallpaperList);
-        progressBar = findViewById(R.id.pb2);
+        adapter = new HadistAdapter(this, wallpaperList);
+        progressBar = findViewById(R.id.pb_cat_hadist);
         recyclerView.setAdapter(adapter);
-        dbWallpaper = FirebaseDatabase.getInstance().getReference("images").child(category);
+        dbWallpaper = FirebaseDatabase.getInstance().getReference("hadist").child(category);
         progressBar.setVisibility(View.VISIBLE);
 
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             dbFav = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                     .child("favourites")
                     .child(category);
             getFavWallpaper(category);
         }else{
             getWallpaper(category);
+        }*/
+    }
+
+    public static class UtilityHadist {
+
+        public static int calculateNoOfColumns(Context context) {
+            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+            int noOfColumns = (int) (dpWidth / 200);
+            return noOfColumns;
         }
     }
 
@@ -138,7 +109,7 @@ public class DetilCatHadistActivity extends AppCompatActivity {
 
     private void getFavWallpaper(final String category){
 
-        dbFav.addListenerForSingleValueEvent(new ValueEventListener() {
+       /* dbFav.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -168,13 +139,13 @@ public class DetilCatHadistActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
     }
 
     private void getWallpaper(final String category){
 
-        dbWallpaper.addListenerForSingleValueEvent(new ValueEventListener() {
+        /*dbWallpaper.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -190,7 +161,7 @@ public class DetilCatHadistActivity extends AppCompatActivity {
 
 
 
-                        Wallpaper wall = new Wallpaper(id, title, desc, ig, fb, url, category);
+                        IsiHadist wall = new IsiHadist(id, title, desc, ig, fb, url, category);
                         if (isFav(wall)){
                             wall.isFav = true;
 
@@ -207,12 +178,12 @@ public class DetilCatHadistActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
     }
 
-    private boolean isFav(Wallpaper wall){
-        for(Wallpaper f : favList){
+    private boolean isFav(IsiHadist wall){
+        for(IsiHadist f : favList){
             if(f.id.equals(wall.id)){
 
                 return true;

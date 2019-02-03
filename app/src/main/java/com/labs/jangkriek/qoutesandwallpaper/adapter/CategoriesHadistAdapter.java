@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.labs.jangkriek.qoutesandwallpaper.R;
+import com.labs.jangkriek.qoutesandwallpaper.activities.DetilCatHadistActivity;
 import com.labs.jangkriek.qoutesandwallpaper.activities.DetilCatQuoteActivity;
 import com.labs.jangkriek.qoutesandwallpaper.model.Category;
 import com.labs.jangkriek.qoutesandwallpaper.model.Hadist;
@@ -75,13 +76,12 @@ public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadi
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             }
 
-            /*int pos = getAdapterPosition();
+            int pos = getAdapterPosition();
             Hadist cat = hadistList.get(pos);
-            Intent i = new Intent(context, DetilCatQuoteActivity.class);
+            Intent i = new Intent(context, DetilCatHadistActivity.class);
 
             i.putExtra("category", cat.jHadist);
-            i.putExtra("logo", cat.thumb);
-            context.startActivity(i);*/
+            context.startActivity(i);
         }
     }
 }
