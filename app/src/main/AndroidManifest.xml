@@ -48,7 +48,8 @@
             android:name=".activities.FullscreenImageActivity"
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".activities.Main2Activity" />
-        <activity android:name=".activities.DetilCatHadistActivity"></activity>
+        <activity android:name=".activities.DetilCatHadistActivity" />
+        <activity android:name=".activities.FullscreenHadist"></activity>
     </application>
 
 </manifest>

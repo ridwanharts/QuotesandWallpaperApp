@@ -73,11 +73,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         @Override
         public void onClick(View v) {
 
-            if (mInterstitialAd.isLoaded()) {
+            /*if (mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
             } else {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            }
+            }*/
 
             int pos = getAdapterPosition();
             Category cat = categoryList.get(pos);

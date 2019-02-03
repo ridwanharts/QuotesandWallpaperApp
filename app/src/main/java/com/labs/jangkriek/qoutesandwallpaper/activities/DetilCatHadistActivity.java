@@ -69,7 +69,7 @@ public class DetilCatHadistActivity extends AppCompatActivity {
 
         wallpaperList = new ArrayList<>();
         favList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recycler_view_cat_hadist);
+        recyclerView = findViewById(R.id.recycler_view_hadist);
         recyclerView.setHasFixedSize(true);
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mNoOfColumns = UtilityHadist.calculateNoOfColumns(getApplicationContext());
@@ -81,14 +81,14 @@ public class DetilCatHadistActivity extends AppCompatActivity {
         dbWallpaper = FirebaseDatabase.getInstance().getReference("hadist").child(category);
         progressBar.setVisibility(View.VISIBLE);
 
-        /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
             dbFav = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .child("favourites")
+                    .child("hadist_favourites")
                     .child(category);
             getFavWallpaper(category);
         }else{
             getWallpaper(category);
-        }*/
+        }
     }
 
     public static class UtilityHadist {
@@ -109,23 +109,25 @@ public class DetilCatHadistActivity extends AppCompatActivity {
 
     private void getFavWallpaper(final String category){
 
-       /* dbFav.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbFav.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     progressBar.setVisibility(View.INVISIBLE);
-                    for(DataSnapshot wallpaperSnapshot: dataSnapshot.getChildren()){
+                    for(DataSnapshot hadistSnapshot: dataSnapshot.getChildren()){
 
-                        String id = wallpaperSnapshot.getKey();
-                        String title = wallpaperSnapshot.child("title").getValue(String.class);
-                        String desc = wallpaperSnapshot.child("desc").getValue(String.class);
-                        String ig = wallpaperSnapshot.child("ig").getValue(String.class);
-                        String fb = wallpaperSnapshot.child("fb").getValue(String.class);
-                        String url = wallpaperSnapshot.child("url").getValue(String.class);
+                        String id = hadistSnapshot.getKey();
+                        String noHadist = hadistSnapshot.child("no_hadist").getValue(String.class);
+                        String jHadist = hadistSnapshot.child("judul").getValue(String.class);
+                        String hadistDari = hadistSnapshot.child("hadist_dr").getValue(String.class);
+                        String hadistIsi = hadistSnapshot.child("hadist_isi").getValue(String.class);
+                        String terjDari = hadistSnapshot.child("terj_dr").getValue(String.class);
+                        String terjIsi = hadistSnapshot.child("terj_isi").getValue(String.class);
+                        String faedah = hadistSnapshot.child("faedah").getValue(String.class);
 
 
-                        Wallpaper wall = new Wallpaper(id, title, desc, url, ig, fb,  category);
-                        favList.add(wall);
+                        IsiHadist had = new IsiHadist(id, noHadist, jHadist, hadistDari, hadistIsi, terjDari, terjIsi, faedah ,  category);
+                        favList.add(had);
 
                     }
                     //adapter.notifyDataSetChanged();
@@ -139,34 +141,34 @@ public class DetilCatHadistActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
 
     }
 
     private void getWallpaper(final String category){
 
-        /*dbWallpaper.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbWallpaper.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     progressBar.setVisibility(View.INVISIBLE);
-                    for(DataSnapshot wallpaperSnapshot: dataSnapshot.getChildren()){
+                    for(DataSnapshot hadistSnapshot: dataSnapshot.getChildren()){
 
-                        String id = wallpaperSnapshot.getKey();
-                        String title = wallpaperSnapshot.child("title").getValue(String.class);
-                        String desc = wallpaperSnapshot.child("desc").getValue(String.class);
-                        String ig = wallpaperSnapshot.child("ig").getValue(String.class);
-                        String fb = wallpaperSnapshot.child("fb").getValue(String.class);
-                        String url = wallpaperSnapshot.child("url").getValue(String.class);
+                        String id = hadistSnapshot.getKey();
+                        String noHadist = hadistSnapshot.child("no_hadist").getValue(String.class);
+                        String jHadist = hadistSnapshot.child("judul").getValue(String.class);
+                        String hadistDari = hadistSnapshot.child("hadist_dr").getValue(String.class);
+                        String hadistIsi = hadistSnapshot.child("hadist_isi").getValue(String.class);
+                        String terjDari = hadistSnapshot.child("terj_dr").getValue(String.class);
+                        String terjIsi = hadistSnapshot.child("terj_isi").getValue(String.class);
+                        String faedah = hadistSnapshot.child("faedah").getValue(String.class);
 
-
-
-                        IsiHadist wall = new IsiHadist(id, title, desc, ig, fb, url, category);
-                        if (isFav(wall)){
-                            wall.isFav = true;
+                        IsiHadist had = new IsiHadist(id, noHadist, jHadist, hadistDari, hadistIsi, terjDari, terjIsi, faedah ,  category);
+                        if (isFav(had)){
+                            had.isFav = true;
 
                         }
-                        wallpaperList.add(wall);
+                        wallpaperList.add(had);
 
                     }
                     adapter.notifyDataSetChanged();
@@ -178,7 +180,7 @@ public class DetilCatHadistActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
 
     }
 

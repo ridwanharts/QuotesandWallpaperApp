@@ -70,11 +70,11 @@ public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadi
         @Override
         public void onClick(View v) {
 
-            if (mInterstitialAd.isLoaded()) {
+            /*if (mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
             } else {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            }
+            }*/
 
             int pos = getAdapterPosition();
             Hadist cat = hadistList.get(pos);

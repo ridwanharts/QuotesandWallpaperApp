@@ -49,9 +49,9 @@ public class HomeFragment extends Fragment implements BottomNavigationView.OnNav
             case R.id.nav_quote:
                 fr = new QuoteFragment();
                 break;
-            case R.id.nav_quran:
+            /*case R.id.nav_quran:
                 fr = new JadwalKajianFragment();
-                break;
+                break;*/
             case R.id.nav_hadist:
                 fr = new BelajarFragment();
                 break;

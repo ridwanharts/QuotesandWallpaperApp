@@ -9,13 +9,13 @@
         app:showAsAction="ifRoom"
         android:enabled="true"
         />
-    <item
+    <!--<item
         android:icon="@drawable/calendar"
         android:id="@+id/nav_quran"
         android:title="Quran"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        />
+        />-->
     <item
         android:icon="@drawable/openbook"
         android:id="@+id/nav_hadist"

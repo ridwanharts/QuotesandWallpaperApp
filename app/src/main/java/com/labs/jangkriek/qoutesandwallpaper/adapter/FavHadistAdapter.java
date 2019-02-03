@@ -36,8 +36,6 @@ import com.labs.jangkriek.qoutesandwallpaper.BuildConfig;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.activities.FullscreenHadist;
 import com.labs.jangkriek.qoutesandwallpaper.activities.FullscreenImageActivity;
-import com.labs.jangkriek.qoutesandwallpaper.activities.SplashScreen;
-import com.labs.jangkriek.qoutesandwallpaper.model.Hadist;
 import com.labs.jangkriek.qoutesandwallpaper.model.IsiHadist;
 import com.labs.jangkriek.qoutesandwallpaper.model.Wallpaper;
 
@@ -48,27 +46,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHolder> {
+public class FavHadistAdapter extends RecyclerView.Adapter<FavHadistAdapter.WallViewHolder> {
 
     private Context context;
     private List<IsiHadist> hadistList;
     private ProgressBar progressBar;
 
-    public HadistAdapter(Context context, List<IsiHadist> hadistList) {
+    public FavHadistAdapter(Context context, List<IsiHadist> hadistList) {
         this.context = context;
         this.hadistList = hadistList;
 
     }
 
     @Override
-    public HadistAdapter.WallViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public FavHadistAdapter.WallViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.item_hadist, viewGroup, false);
-        return new HadistAdapter.WallViewHolder(v);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_fav_hadist, viewGroup, false);
+        return new FavHadistAdapter.WallViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(HadistAdapter.WallViewHolder categoryViewHolder, int i) {
+    public void onBindViewHolder(FavHadistAdapter.WallViewHolder categoryViewHolder, int i) {
+        IsiHadist wall = hadistList.get(i);
         IsiHadist had = hadistList.get(i);
         int j = i+1;
         categoryViewHolder.tvNo.setText(j +".");
@@ -80,7 +79,7 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
         //categoryViewHolder.tvFaedah.setText(had.faedah);
 
 
-        if (had.isFav){
+        if (wall.isFav){
             categoryViewHolder.checkBox.setChecked(true);
         }
 
@@ -99,14 +98,14 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
 
         public WallViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNo = itemView.findViewById(R.id.tvNomor);
-            tvTerjDari = itemView.findViewById(R.id.hadist_ter_dari);
-            tvNoHadist = itemView.findViewById(R.id.noHadist);
-            tvJudulHadist = itemView.findViewById(R.id.txt_view_judul_hadist);
+            tvNo = itemView.findViewById(R.id.fav_tvNomor);
+            tvTerjDari = itemView.findViewById(R.id.fav_hadist_ter_dari);
+            tvNoHadist = itemView.findViewById(R.id.fav_noHadist);
+            tvJudulHadist = itemView.findViewById(R.id.fav_txt_view_judul_hadist);
 
-            checkBox = itemView.findViewById(R.id.fav_button_hadist);
-            buttonShare = itemView.findViewById(R.id.share_button_hadist);
-            buttonCopy = itemView.findViewById(R.id.copy_button_hadist);
+            checkBox = itemView.findViewById(R.id.fav_fav_button_hadist);
+            buttonShare = itemView.findViewById(R.id.fav_share_button_hadist);
+            buttonCopy = itemView.findViewById(R.id.fav_copy_button_hadist);
 
             checkBox.setOnCheckedChangeListener(this);
             buttonCopy.setOnClickListener(this);
@@ -119,15 +118,19 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
         public void onClick(View v) {
 
             switch(v.getId()){
-                case R.id.share_button_hadist:
-                    //shareWallpaper(hadistList.get(getAdapterPosition()));
-                    Toast.makeText(context, "Share hadist", Toast.LENGTH_SHORT).show();
+                case R.id.fav_share_button:
+                    /*shareWallpaper(wallpaperList.get(getAdapterPosition()));*/
+                    Toast.makeText(context, "Share quote", Toast.LENGTH_SHORT).show();
                     break;
-                case R.id.copy_button_hadist:
-                    //downloadWallpaper(hadistList.get(getAdapterPosition()));
-                    Toast.makeText(context, "Copied", Toast.LENGTH_SHORT).show();
+                case R.id.fav_download_button:
+                    /*downloadWallpaper(wallpaperList.get(getAdapterPosition()));*/
+                    Toast.makeText(context, "Download complete", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.fav_fav_button:
+                        Toast.makeText(context, "Add to favourite", Toast.LENGTH_SHORT).show();
                     break;
             }
+
             int pos = getAdapterPosition();
             IsiHadist had = hadistList.get(pos);
 
@@ -144,8 +147,8 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
 
         }
 
-        private void shareWallpaper(IsiHadist w) {
-            /*RequestOptions myOptions = new RequestOptions()
+        /*private void shareWallpaper(Wallpaper w) {
+            RequestOptions myOptions = new RequestOptions()
                     .centerCrop();
             Glide.with(context).asBitmap().apply(myOptions).load(w.url)
                     .into(new SimpleTarget<Bitmap>() {
@@ -157,12 +160,12 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
                             context.startActivity(Intent.createChooser(i, "Quotes App"));
 
                         }
-                    });*/
-        }
+                    });
+        }*/
 
-        private void downloadWallpaper(final IsiHadist wallpaper){
+        /*private void downloadWallpaper(final Wallpaper wallpaper){
 
-            /*RequestOptions myOptions = new RequestOptions()
+            RequestOptions myOptions = new RequestOptions()
                     .centerCrop();
             Glide.with(context).asBitmap().apply(myOptions).load(wallpaper.url)
                     .into(new SimpleTarget<Bitmap>() {
@@ -179,10 +182,10 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
                             }
 
                         }
-                    });*/
-        }
+                    });
+        }*/
 
-        private String saveWallpaper(Bitmap bitmap, String id){
+        /*private String saveWallpaper(Bitmap bitmap, String id){
 
             if(ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                 if(ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
@@ -223,17 +226,17 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
                 galleryAddPic(savedImagePath);
             }
             return savedImagePath;
-        }
+        }*/
 
-        private void galleryAddPic(String imagePath) {
+        /*private void galleryAddPic(String imagePath) {
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             File f = new File(imagePath);
             Uri contentUri = Uri.fromFile(f);
             mediaScanIntent.setData(contentUri);
             context.sendBroadcast(mediaScanIntent);
-        }
+        }*/
 
-        private Uri getLocalBitmapUri(Bitmap bmp){
+        /*private Uri getLocalBitmapUri(Bitmap bmp){
             Uri bmpUri = null;
             File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                     "images_quotes_"+System.currentTimeMillis() + ".png");
@@ -248,7 +251,7 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
                 e.printStackTrace();
             }
             return bmpUri;
-        }
+        }*/
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

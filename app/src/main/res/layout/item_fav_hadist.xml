@@ -26,7 +26,7 @@
                 android:id="@+id/pojok">
                 <TextView
                     android:layout_width="50dp"
-                    android:id="@+id/tvNomor"
+                    android:id="@+id/fav_tvNomor"
                     android:gravity="center_horizontal|center_vertical"
                     android:background="@color/bg1"
                     android:textStyle="bold"
@@ -34,7 +34,7 @@
                     android:text="20"/>
 
                 <TextView
-                    android:id="@+id/hadist_ter_dari"
+                    android:id="@+id/fav_hadist_ter_dari"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -48,7 +48,7 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:id="@+id/tvView"
+                    android:id="@+id/fav_tvView"
                     android:gravity="center_horizontal|center_vertical"
                     android:background="@color/bg1"
                     android:src="@drawable/ic_right"
@@ -68,7 +68,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/txt_view_judul_hadist"
+                    android:id="@+id/fav_txt_view_judul_hadist"
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
                     android:layout_gravity="center_vertical"
@@ -95,7 +95,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:id="@+id/noHadist"
+                android:id="@+id/fav_noHadist"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:text="Nomor Hadist"/>
 
@@ -114,14 +114,14 @@
                     android:layout_height="20dp"
                     android:visibility="invisible"
                     android:padding="1dp"
-                    android:id="@+id/copy_button_hadist"
+                    android:id="@+id/fav_copy_button_hadist"
                     android:background="@drawable/ic_copy"/>
 
                 <CheckBox
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_marginLeft="30dp"
-                    android:id="@+id/fav_button_hadist"
+                    android:id="@+id/fav_fav_button_hadist"
                     android:button="@drawable/custom_checkbox"/>
 
                 <!-- TODO: invisible -->
@@ -131,7 +131,7 @@
                     android:layout_marginLeft="30dp"
                     android:padding="1dp"
                     android:visibility="invisible"
-                    android:id="@+id/share_button_hadist"
+                    android:id="@+id/fav_share_button_hadist"
                     android:background="@drawable/ic_share2"/>
             </LinearLayout>
 

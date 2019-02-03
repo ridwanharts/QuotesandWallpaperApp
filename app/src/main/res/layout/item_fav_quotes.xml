@@ -32,6 +32,7 @@
                 android:orientation="horizontal"
                 android:padding="3dp">
 
+                <!-- TODO: invisible -->
                 <TextView
                     android:id="@+id/fav_txt_view_title"
                     android:layout_width="match_parent"
