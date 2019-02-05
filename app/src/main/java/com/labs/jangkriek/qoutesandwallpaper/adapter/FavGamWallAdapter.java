@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -19,17 +20,24 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.labs.jangkriek.qoutesandwallpaper.BuildConfig;
 import com.labs.jangkriek.qoutesandwallpaper.R;
-import com.labs.jangkriek.qoutesandwallpaper.activities.FullscreenHadist;
-import com.labs.jangkriek.qoutesandwallpaper.model.IsiHadist;
+import com.labs.jangkriek.qoutesandwallpaper.activities.FullscreenGamWallActivity;
+import com.labs.jangkriek.qoutesandwallpaper.activities.FullscreenImageActivity;
+import com.labs.jangkriek.qoutesandwallpaper.model.IsiGamWall;
+import com.labs.jangkriek.qoutesandwallpaper.model.IsiQuote;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,39 +46,34 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public class FavHadistAdapter extends RecyclerView.Adapter<FavHadistAdapter.WallViewHolder> {
+public class FavGamWallAdapter extends RecyclerView.Adapter<FavGamWallAdapter.WallViewHolder> {
 
     private Context context;
-    private List<IsiHadist> hadistList;
+    private List<IsiGamWall> isiGamWallList;
     private ProgressBar progressBar;
 
-    public FavHadistAdapter(Context context, List<IsiHadist> hadistList) {
+    public FavGamWallAdapter(Context context, List<IsiGamWall> isiGamWallList) {
         this.context = context;
-        this.hadistList = hadistList;
+        this.isiGamWallList = isiGamWallList;
 
     }
 
     @Override
-    public FavHadistAdapter.WallViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public FavGamWallAdapter.WallViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.item_fav_hadist, viewGroup, false);
-        return new FavHadistAdapter.WallViewHolder(v);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_fav_gamwall, viewGroup, false);
+        return new FavGamWallAdapter.WallViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(FavHadistAdapter.WallViewHolder categoryViewHolder, int i) {
-        IsiHadist had = hadistList.get(i);
-        int j = i+1;
-        categoryViewHolder.tvNo.setText(j +".");
-        categoryViewHolder.tvNoHadist.setText(had.no_hadist);
-        categoryViewHolder.tvJudulHadist.setText(had.judul);
-        //categoryViewHolder.tvHadistDari.setText(had.hadistDari);
-        //categoryViewHolder.tvHadistIsi.setText(had.hadistIsi);
-        categoryViewHolder.tvTerjDari.setText(had.terj_dr);
-        //categoryViewHolder.tvFaedah.setText(had.faedah);
+    public void onBindViewHolder(FavGamWallAdapter.WallViewHolder categoryViewHolder, int i) {
+        IsiGamWall wall = isiGamWallList.get(i);
+        categoryViewHolder.tvName.setText(wall.title);
+        RequestOptions myOptions = new RequestOptions()
+                .centerCrop();
+        Glide.with(context).asBitmap().apply(myOptions).load(wall.url).into(categoryViewHolder.ivThumb);
 
-
-        if (had.isFav){
+        if (wall.isFav){
             categoryViewHolder.checkBox.setChecked(true);
         }
 
@@ -78,30 +81,28 @@ public class FavHadistAdapter extends RecyclerView.Adapter<FavHadistAdapter.Wall
 
     @Override
     public int getItemCount() {
-        return hadistList.size();
+        return isiGamWallList.size();
     }
 
     public class WallViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-        TextView tvNo, tvNoHadist, tvJudulHadist, tvHadistDari, tvHadistIsi, tvTerjDari, tvTerjIsi, tvFaedah;
+        TextView tvName;
+        ImageView ivThumb;
         CheckBox checkBox;
-        ImageButton buttonShare, buttonCopy;
+        ImageButton buttonShare, buttonDown;
 
         public WallViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNo = itemView.findViewById(R.id.fav_tvNomor);
-            tvTerjDari = itemView.findViewById(R.id.fav_hadist_ter_dari);
-            tvNoHadist = itemView.findViewById(R.id.fav_noHadist);
-            tvJudulHadist = itemView.findViewById(R.id.fav_txt_view_judul_hadist);
-
-            checkBox = itemView.findViewById(R.id.fav_fav_button_hadist);
-            buttonShare = itemView.findViewById(R.id.fav_share_button_hadist);
-            buttonCopy = itemView.findViewById(R.id.fav_copy_button_hadist);
+            tvName = itemView.findViewById(R.id.gamwall_fav_txt_view_title);
+            ivThumb = itemView.findViewById(R.id.gamwall_fav_iv_imagevwall);
+            checkBox = itemView.findViewById(R.id.gamwall_fav_fav_button);
+            buttonShare = itemView.findViewById(R.id.gamwall_fav_share_button);
+            buttonDown = itemView.findViewById(R.id.gamwall_fav_download_button);
 
             checkBox.setOnCheckedChangeListener(this);
-            buttonCopy.setOnClickListener(this);
+            buttonDown.setOnClickListener(this);
             buttonShare.setOnClickListener(this);
-            itemView.setOnClickListener(this);
+            ivThumb.setOnClickListener(this);
         }
 
 
@@ -110,35 +111,28 @@ public class FavHadistAdapter extends RecyclerView.Adapter<FavHadistAdapter.Wall
 
             switch(v.getId()){
                 case R.id.fav_share_button:
-                    /*shareWallpaper(wallpaperList.get(getAdapterPosition()));*/
+                    shareWallpaper(isiGamWallList.get(getAdapterPosition()));
                     Toast.makeText(context, "Share quote", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.fav_download_button:
-                    /*downloadWallpaper(wallpaperList.get(getAdapterPosition()));*/
+                    downloadWallpaper(isiGamWallList.get(getAdapterPosition()));
                     Toast.makeText(context, "Download complete", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.fav_fav_button:
-                        Toast.makeText(context, "Add to favourite", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Add to favourite", Toast.LENGTH_SHORT).show();
                     break;
             }
 
             int pos = getAdapterPosition();
-            IsiHadist had = hadistList.get(pos);
-
-            Intent i = new Intent(context, FullscreenHadist.class);
-            i.putExtra("NO_HADIST", had.no_hadist);
-            i.putExtra("JUDUL_HADIST", had.judul);
-            i.putExtra("HADIST_DARI", had.hadist_dr);
-            i.putExtra("HADIST_ISI", had.hadist_isi);
-            i.putExtra("TERJ_DARI", had.terj_dr);
-            i.putExtra("TER_ISI", had.terj_isi);
-            i.putExtra("FAEDAH", had.faedah);
-            i.putExtra("idActivity", "");
+            IsiGamWall img = isiGamWallList.get(pos);
+            Intent i = new Intent(context, FullscreenGamWallActivity.class);
+            i.putExtra("image", img.url);
+            i.putExtra("idActivity", "fav");
             context.startActivity(i);
 
         }
 
-        /*private void shareWallpaper(IsiQuote w) {
+        private void shareWallpaper(IsiGamWall w) {
             RequestOptions myOptions = new RequestOptions()
                     .centerCrop();
             Glide.with(context).asBitmap().apply(myOptions).load(w.url)
@@ -148,33 +142,33 @@ public class FavHadistAdapter extends RecyclerView.Adapter<FavHadistAdapter.Wall
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("image/*");
                             i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(resource));
-                            context.startActivity(Intent.createChooser(i, "Quotes App"));
+                            context.startActivity(Intent.createChooser(i, "Sobat Hijrah"));
 
                         }
                     });
-        }*/
+        }
 
-        /*private void downloadWallpaper(final IsiQuote wallpaper){
+        private void downloadWallpaper(final IsiGamWall isiQuote){
 
             RequestOptions myOptions = new RequestOptions()
                     .centerCrop();
-            Glide.with(context).asBitmap().apply(myOptions).load(wallpaper.url)
+            Glide.with(context).asBitmap().apply(myOptions).load(isiQuote.url)
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             Intent i = new Intent(Intent.ACTION_VIEW);
-                            Uri uri = Uri.parse(saveWallpaper(resource, wallpaper.id));
+                            Uri uri = Uri.parse(saveWallpaper(resource, isiQuote.id));
                             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                             if (uri != null) {
-                                //saveWallpaper(resource, wallpaper.id);
-                                i.setDataAndType(Uri.parse(saveWallpaper(resource, wallpaper.id)), "image/*");
+                                //saveWallpaper(resource, isiQuote.id);
+                                i.setDataAndType(Uri.parse(saveWallpaper(resource, isiQuote.id)), "image/*");
                                 //context.startActivity(Intent.createChooser(i, "Quotes App"));
                             }
 
                         }
                     });
-        }*/
+        }
 
         private String saveWallpaper(Bitmap bitmap, String id){
 
@@ -197,7 +191,7 @@ public class FavHadistAdapter extends RecyclerView.Adapter<FavHadistAdapter.Wall
             String imageFileName = "JPEG_" + id + ".jpg";
             File storageDir = new File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                            + "/QuotesApp");
+                            + "/SobatHijrah/Wallpaper");
             boolean success = true;
             if (!storageDir.exists()) {
                 success = storageDir.mkdirs();
@@ -230,7 +224,7 @@ public class FavHadistAdapter extends RecyclerView.Adapter<FavHadistAdapter.Wall
         private Uri getLocalBitmapUri(Bitmap bmp){
             Uri bmpUri = null;
             File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                    "images_quotes_"+System.currentTimeMillis() + ".png");
+                    "images_wallpaper_"+System.currentTimeMillis() + ".png");
             try {
                 FileOutputStream out = new FileOutputStream(file);
                 bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
@@ -254,18 +248,18 @@ public class FavHadistAdapter extends RecyclerView.Adapter<FavHadistAdapter.Wall
             }
 
             int position = getAdapterPosition();
-            IsiHadist had = hadistList.get(position);
+            IsiGamWall wall = isiGamWallList.get(position);
 
             DatabaseReference dbFav = FirebaseDatabase.getInstance().getReference("users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .child("hadist_favourites")
-                    .child(had.category);
+                    .child("gamWallfavourites")
+                    .child(wall.category);
 
 
             if(isChecked){
-                dbFav.child(had.id).setValue(had);
+                dbFav.child(wall.id).setValue(wall);
             }else {
-                dbFav.child(had.id).setValue(null);
+                dbFav.child(wall.id).setValue(null);
                 Toast.makeText(context, "remove from favourite", Toast.LENGTH_SHORT).show();
             }
 

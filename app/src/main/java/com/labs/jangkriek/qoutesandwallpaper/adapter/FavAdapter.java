@@ -35,7 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.labs.jangkriek.qoutesandwallpaper.BuildConfig;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.activities.FullscreenImageActivity;
-import com.labs.jangkriek.qoutesandwallpaper.model.Wallpaper;
+import com.labs.jangkriek.qoutesandwallpaper.model.IsiQuote;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,12 +47,12 @@ import java.util.List;
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> {
 
     private Context context;
-    private List<Wallpaper> wallpaperList;
+    private List<IsiQuote> isiQuoteList;
     private ProgressBar progressBar;
 
-    public FavAdapter(Context context, List<Wallpaper> wallpaperList) {
+    public FavAdapter(Context context, List<IsiQuote> isiQuoteList) {
         this.context = context;
-        this.wallpaperList = wallpaperList;
+        this.isiQuoteList = isiQuoteList;
 
     }
 
@@ -65,7 +65,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
 
     @Override
     public void onBindViewHolder(FavAdapter.WallViewHolder categoryViewHolder, int i) {
-        Wallpaper wall = wallpaperList.get(i);
+        IsiQuote wall = isiQuoteList.get(i);
         categoryViewHolder.tvName.setText(wall.title);
         RequestOptions myOptions = new RequestOptions()
                 .centerCrop();
@@ -79,7 +79,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
 
     @Override
     public int getItemCount() {
-        return wallpaperList.size();
+        return isiQuoteList.size();
     }
 
     public class WallViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -109,11 +109,11 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
 
             switch(v.getId()){
                 case R.id.fav_share_button:
-                    shareWallpaper(wallpaperList.get(getAdapterPosition()));
+                    shareWallpaper(isiQuoteList.get(getAdapterPosition()));
                     Toast.makeText(context, "Share quote", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.fav_download_button:
-                    downloadWallpaper(wallpaperList.get(getAdapterPosition()));
+                    downloadWallpaper(isiQuoteList.get(getAdapterPosition()));
                     Toast.makeText(context, "Download complete", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.fav_fav_button:
@@ -122,7 +122,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
             }
 
             int pos = getAdapterPosition();
-            Wallpaper img = wallpaperList.get(pos);
+            IsiQuote img = isiQuoteList.get(pos);
             Intent i = new Intent(context, FullscreenImageActivity.class);
             i.putExtra("image", img.url);
             i.putExtra("idActivity", "fav");
@@ -130,7 +130,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
 
         }
 
-        private void shareWallpaper(Wallpaper w) {
+        private void shareWallpaper(IsiQuote w) {
             RequestOptions myOptions = new RequestOptions()
                     .centerCrop();
             Glide.with(context).asBitmap().apply(myOptions).load(w.url)
@@ -146,21 +146,21 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
                     });
         }
 
-        private void downloadWallpaper(final Wallpaper wallpaper){
+        private void downloadWallpaper(final IsiQuote isiQuote){
 
             RequestOptions myOptions = new RequestOptions()
                     .centerCrop();
-            Glide.with(context).asBitmap().apply(myOptions).load(wallpaper.url)
+            Glide.with(context).asBitmap().apply(myOptions).load(isiQuote.url)
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             Intent i = new Intent(Intent.ACTION_VIEW);
-                            Uri uri = Uri.parse(saveWallpaper(resource, wallpaper.id));
+                            Uri uri = Uri.parse(saveWallpaper(resource, isiQuote.id));
                             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                             if (uri != null) {
-                                //saveWallpaper(resource, wallpaper.id);
-                                i.setDataAndType(Uri.parse(saveWallpaper(resource, wallpaper.id)), "image/*");
+                                //saveWallpaper(resource, isiQuote.id);
+                                i.setDataAndType(Uri.parse(saveWallpaper(resource, isiQuote.id)), "image/*");
                                 //context.startActivity(Intent.createChooser(i, "Quotes App"));
                             }
 
@@ -246,7 +246,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
             }
 
             int position = getAdapterPosition();
-            Wallpaper wall = wallpaperList.get(position);
+            IsiQuote wall = isiQuoteList.get(position);
 
             DatabaseReference dbFav = FirebaseDatabase.getInstance().getReference("users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

@@ -19,9 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.Utility;
-import com.labs.jangkriek.qoutesandwallpaper.adapter.CategoriesAdapter;
 import com.labs.jangkriek.qoutesandwallpaper.adapter.CategoriesHadistAdapter;
-import com.labs.jangkriek.qoutesandwallpaper.model.Category;
 import com.labs.jangkriek.qoutesandwallpaper.model.Hadist;
 
 import java.util.ArrayList;

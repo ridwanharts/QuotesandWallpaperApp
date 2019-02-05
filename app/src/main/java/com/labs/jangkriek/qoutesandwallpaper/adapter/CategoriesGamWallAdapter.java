@@ -16,20 +16,20 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.activities.DetilCatQuoteActivity;
-import com.labs.jangkriek.qoutesandwallpaper.activities.MainActivity;
-import com.labs.jangkriek.qoutesandwallpaper.model.Category;
+import com.labs.jangkriek.qoutesandwallpaper.model.GamWall;
+import com.labs.jangkriek.qoutesandwallpaper.model.Quote;
 
 import java.util.List;
 
-public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder> {
+public class CategoriesGamWallAdapter extends RecyclerView.Adapter<CategoriesGamWallAdapter.CategoryViewHolder> {
 
     private Context context;
-    private List<Category> categoryList;
+    private List<GamWall> gamWallList;
     private InterstitialAd mInterstitialAd;
 
-    public CategoriesAdapter(Context context, List<Category> categoryList) {
+    public CategoriesGamWallAdapter(Context context, List<GamWall> gamWallList) {
         this.context = context;
-        this.categoryList = categoryList;
+        this.gamWallList = gamWallList;
 
         mInterstitialAd = new InterstitialAd(context);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
@@ -37,15 +37,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     }
 
     @Override
-    public CategoriesAdapter.CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public CategoriesGamWallAdapter.CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View v = LayoutInflater.from(context).inflate(R.layout.item_cat_quote, viewGroup, false);
-        return new CategoryViewHolder(v);
+        return new CategoriesGamWallAdapter.CategoryViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(CategoriesAdapter.CategoryViewHolder categoryViewHolder, int i) {
-        Category cat = categoryList.get(i);
+    public void onBindViewHolder(CategoriesGamWallAdapter.CategoryViewHolder categoryViewHolder, int i) {
+        GamWall cat = gamWallList.get(i);
         categoryViewHolder.tvName.setText(cat.name);
         RequestOptions myOptions = new RequestOptions()
                 .centerCrop();
@@ -55,7 +55,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     @Override
     public int getItemCount() {
-        return categoryList.size();
+        return gamWallList.size();
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -80,13 +80,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
             }*/
 
             int pos = getAdapterPosition();
-            Category cat = categoryList.get(pos);
+            GamWall cat = gamWallList.get(pos);
             Intent i = new Intent(context, DetilCatQuoteActivity.class);
 
             i.putExtra("category", cat.name);
             i.putExtra("logo", cat.thumb);
-            i.putExtra("ig", cat.ig);
-            i.putExtra("fb", cat.fb);
             context.startActivity(i);
         }
     }

@@ -49,7 +49,9 @@
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".activities.Main2Activity" />
         <activity android:name=".activities.DetilCatHadistActivity" />
-        <activity android:name=".activities.FullscreenHadist"></activity>
+        <activity android:name=".activities.FullscreenHadist" />
+        <activity android:name=".activities.DetilCatGamWallActivity" />
+        <activity android:name=".activities.FullscreenGamWallActivity"></activity>
     </application>
 
 </manifest>

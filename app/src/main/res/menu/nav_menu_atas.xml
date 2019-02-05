@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
         android:icon="@drawable/quote1"
         android:id="@+id/nav_quote"
@@ -9,13 +10,13 @@
         app:showAsAction="ifRoom"
         android:enabled="true"
         />
-    <!--<item
-        android:icon="@drawable/calendar"
+    <item
+        android:icon="@drawable/image"
         android:id="@+id/nav_quran"
-        android:title="Quran"
+        android:title="Wallpaper"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        />-->
+        />
     <item
         android:icon="@drawable/openbook"
         android:id="@+id/nav_hadist"

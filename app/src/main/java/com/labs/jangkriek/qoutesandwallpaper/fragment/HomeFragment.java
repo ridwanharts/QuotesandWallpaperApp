@@ -49,9 +49,9 @@ public class HomeFragment extends Fragment implements BottomNavigationView.OnNav
             case R.id.nav_quote:
                 fr = new QuoteFragment();
                 break;
-            /*case R.id.nav_quran:
+            case R.id.nav_quran:
                 fr = new JadwalKajianFragment();
-                break;*/
+                break;
             case R.id.nav_hadist:
                 fr = new BelajarFragment();
                 break;
@@ -70,9 +70,9 @@ public class HomeFragment extends Fragment implements BottomNavigationView.OnNav
 
     /*private ProgressBar progressBar;
     private DatabaseReference dbCategories;
-    private List<Category> categoryList;
+    private List<Quote> categoryList;
     private RecyclerView recyclerView;
-    private CategoriesAdapter categoriesAdapter;
+    private CategoriesQuoteAdapter categoriesAdapter;
     private int mNoOfColumns;
 
     public HomeFragment() {
@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment implements BottomNavigationView.OnNav
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), mNoOfColumns));
 
         categoryList = new ArrayList<>();
-        categoriesAdapter = new CategoriesAdapter(getActivity(), categoryList);
+        categoriesAdapter = new CategoriesQuoteAdapter(getActivity(), categoryList);
         recyclerView.setAdapter(categoriesAdapter);
 
         dbCategories = FirebaseDatabase.getInstance().getReference("categories");
@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment implements BottomNavigationView.OnNav
                         String ig = ds.child("ig").getValue(String.class);
                         String fb = ds.child("fb").getValue(String.class);
 
-                        Category cat = new Category(name, desc, thumb, ig, fb);
+                        Quote cat = new Quote(name, desc, thumb, ig, fb);
                         categoryList.add(cat);
                     }
                     categoriesAdapter.notifyDataSetChanged();

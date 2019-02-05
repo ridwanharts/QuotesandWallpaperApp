@@ -2,47 +2,64 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_height="150dp"
+        android:background="@drawable/shape_button"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
             android:background="@drawable/ic_block"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
             android:layout_gravity="center"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:padding="3dp"
-            android:text="Wadidaww"
+            android:text="Oops !!"
+            android:id="@+id/username_google"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:layout_gravity="center"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="You are not sign in !!"
             android:padding="3dp"
-            android:textSize="14sp"
+            android:id="@+id/email_google"
+            android:layout_below="@+id/username_google"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:layout_height="30dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textSize="16sp"
             android:textAlignment="center"
             android:layout_gravity="center"/>
 
 
         <com.google.android.gms.common.SignInButton
-            android:paddingTop="5dp"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/google_button_signin">
+            android:id="@+id/google_button_signin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="15dp"
+            android:text="Log Out">
 
         </com.google.android.gms.common.SignInButton>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

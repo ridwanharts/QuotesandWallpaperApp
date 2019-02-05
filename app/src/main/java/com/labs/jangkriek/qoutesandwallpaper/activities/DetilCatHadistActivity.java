@@ -2,7 +2,6 @@ package com.labs.jangkriek.qoutesandwallpaper.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,12 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,11 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.labs.jangkriek.qoutesandwallpaper.R;
-import com.labs.jangkriek.qoutesandwallpaper.Utility;
 import com.labs.jangkriek.qoutesandwallpaper.adapter.HadistAdapter;
-import com.labs.jangkriek.qoutesandwallpaper.adapter.QuoteAdapter;
 import com.labs.jangkriek.qoutesandwallpaper.model.IsiHadist;
-import com.labs.jangkriek.qoutesandwallpaper.model.Wallpaper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +57,7 @@ public class DetilCatHadistActivity extends AppCompatActivity {
 
         toolbar.setTitle(category);
         TextView tvCatDetail = findViewById(R.id.tv_cat_detil_hadist);
-        tvCatDetail.setText(category.toUpperCase());
+        tvCatDetail.setText(category);
 
         wallpaperList = new ArrayList<>();
         favList = new ArrayList<>();

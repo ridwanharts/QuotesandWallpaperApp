@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -20,26 +19,17 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.labs.jangkriek.qoutesandwallpaper.BuildConfig;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.activities.FullscreenHadist;
-import com.labs.jangkriek.qoutesandwallpaper.activities.FullscreenImageActivity;
-import com.labs.jangkriek.qoutesandwallpaper.activities.SplashScreen;
-import com.labs.jangkriek.qoutesandwallpaper.model.Hadist;
 import com.labs.jangkriek.qoutesandwallpaper.model.IsiHadist;
-import com.labs.jangkriek.qoutesandwallpaper.model.Wallpaper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,11 +62,11 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
         IsiHadist had = hadistList.get(i);
         int j = i+1;
         categoryViewHolder.tvNo.setText(j +".");
-        categoryViewHolder.tvNoHadist.setText(had.noHadist);
-        categoryViewHolder.tvJudulHadist.setText(had.judulHadist);
+        categoryViewHolder.tvNoHadist.setText(had.no_hadist);
+        categoryViewHolder.tvJudulHadist.setText(had.judul);
         //categoryViewHolder.tvHadistDari.setText(had.hadistDari);
         //categoryViewHolder.tvHadistIsi.setText(had.hadistIsi);
-        categoryViewHolder.tvTerjDari.setText(had.terjDari);
+        categoryViewHolder.tvTerjDari.setText(had.terj_dr);
         //categoryViewHolder.tvFaedah.setText(had.faedah);
 
 
@@ -132,12 +122,12 @@ public class HadistAdapter extends RecyclerView.Adapter<HadistAdapter.WallViewHo
             IsiHadist had = hadistList.get(pos);
 
             Intent i = new Intent(context, FullscreenHadist.class);
-            i.putExtra("NO_HADIST", had.noHadist);
-            i.putExtra("JUDUL_HADIST", had.judulHadist);
-            i.putExtra("HADIST_DARI", had.hadistDari);
-            i.putExtra("HADIST_ISI", had.hadistIsi);
-            i.putExtra("TERJ_DARI", had.terjDari);
-            i.putExtra("TER_ISI", had.terIsi);
+            i.putExtra("NO_HADIST", had.no_hadist);
+            i.putExtra("JUDUL_HADIST", had.judul);
+            i.putExtra("HADIST_DARI", had.hadist_dr);
+            i.putExtra("HADIST_ISI", had.hadist_isi);
+            i.putExtra("TERJ_DARI", had.terj_dr);
+            i.putExtra("TER_ISI", had.terj_isi);
             i.putExtra("FAEDAH", had.faedah);
             i.putExtra("idActivity", "hadist");
             context.startActivity(i);

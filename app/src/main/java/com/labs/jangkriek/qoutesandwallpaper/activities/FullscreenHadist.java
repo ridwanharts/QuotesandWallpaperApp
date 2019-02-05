@@ -16,7 +16,6 @@ public class FullscreenHadist extends AppCompatActivity {
     private Uri mImageUri;
     private TextView noH, judulH, hDari, hIsi, tDari, tIsi, faedah;
     private String hadist;
-    private ImageView fullScreenImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +30,6 @@ public class FullscreenHadist extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        noH = findViewById(R.id.detil_no_hadist);
-        judulH = findViewById(R.id.judul);
-        hDari = findViewById(R.id.detil_hadist_dari);
-        hIsi = findViewById(R.id.detil_hadist_isi);
-        tDari = findViewById(R.id.detil_hadist_terj_dari);
-        tIsi = findViewById(R.id.detil_hadist_terj_isi);
-        faedah = findViewById(R.id.detil_hadist_faedah);
-        fullScreenImageView = findViewById(R.id.fullScreenImageView);
-
         Intent intent = getIntent();
 
         final String noH1 = intent.getStringExtra("NO_HADIST");
@@ -49,6 +39,14 @@ public class FullscreenHadist extends AppCompatActivity {
         final String tDari1 = intent.getStringExtra("TERJ_DARI");
         final String tIsi1 = intent.getStringExtra("TER_ISI");
         final String faedah1 = intent.getStringExtra("FAEDAH");
+
+        noH = findViewById(R.id.detil_no_hadist);
+        judulH = findViewById(R.id.judul);
+        hDari = findViewById(R.id.detil_hadist_dari);
+        hIsi = findViewById(R.id.detil_hadist_isi);
+        tDari = findViewById(R.id.detil_hadist_terj_dari);
+        tIsi = findViewById(R.id.detil_hadist_terj_isi);
+        faedah = findViewById(R.id.detil_hadist_faedah);
 
         noH.setText(noH1);
         judulH.setText(judulH1);
@@ -61,8 +59,6 @@ public class FullscreenHadist extends AppCompatActivity {
         if (intent.getStringExtra("idActivity")!= null){
             hadist = intent.getStringExtra("idActivity");
         }
-
-        Toast.makeText(getApplicationContext(),"" + hadist, Toast.LENGTH_SHORT).show();
     }
 
 

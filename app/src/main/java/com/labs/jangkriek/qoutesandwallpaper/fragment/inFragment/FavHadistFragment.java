@@ -1,6 +1,7 @@
-package com.labs.jangkriek.qoutesandwallpaper;
+package com.labs.jangkriek.qoutesandwallpaper.fragment.inFragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.labs.jangkriek.qoutesandwallpaper.adapter.FavAdapter;
+import com.labs.jangkriek.qoutesandwallpaper.R;
+import com.labs.jangkriek.qoutesandwallpaper.adapter.FavHadistAdapter;
 import com.labs.jangkriek.qoutesandwallpaper.fragment.SettingFragment;
-import com.labs.jangkriek.qoutesandwallpaper.model.Wallpaper;
+import com.labs.jangkriek.qoutesandwallpaper.model.IsiHadist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +33,16 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavQuoteFragment extends Fragment {
+public class FavHadistFragment extends Fragment {
 
+    List<IsiHadist> favWallpaper;
+    RecyclerView recyclerView;
+    ProgressBar pb;
+    FavHadistAdapter adapter;
+    DatabaseReference dbFav;
+    int mNoOfColumns;
 
-    public FavQuoteFragment() {
+    public FavHadistFragment() {
         // Required empty public constructor
     }
 
@@ -42,29 +51,22 @@ public class FavQuoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fav_quote, container, false);
+        return inflater.inflate(R.layout.fragment_fav_belajar, container, false);
     }
-
-    List<Wallpaper> favWallpaper;
-    RecyclerView recyclerView;
-    ProgressBar pb;
-    FavAdapter adapter;
-    DatabaseReference dbFav;
-    int mNoOfColumns;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         favWallpaper = new ArrayList<>();
-        recyclerView = view.findViewById(R.id.recycler_view3);
-        pb = view.findViewById(R.id.pb3);
-        adapter = new FavAdapter(getActivity(), favWallpaper);
+        recyclerView = view.findViewById(R.id.recycler_view_fav_hadist);
+        pb = view.findViewById(R.id.pb_fav_hadist);
+        adapter = new FavHadistAdapter(getActivity(), favWallpaper);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mNoOfColumns = Utility.calculateNoOfColumns(getActivity());
+        mNoOfColumns = UtilityHadist.calculateNoOfColumns(getActivity());
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), mNoOfColumns));
         recyclerView.setAdapter(adapter);
@@ -79,7 +81,7 @@ public class FavQuoteFragment extends Fragment {
 
         dbFav = FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("favourites");
+                .child("hadist_favourites");
 
         pb.setVisibility(View.VISIBLE);
 
@@ -88,17 +90,19 @@ public class FavQuoteFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 pb.setVisibility(View.INVISIBLE);
                 for(DataSnapshot cat : dataSnapshot.getChildren()){
-                    for(DataSnapshot wall : cat.getChildren()){
-                        String id = wall.getKey();
-                        String title = wall.child("title").getValue(String.class);
-                        String desc = wall.child("desc").getValue(String.class);
-                        String ig = wall.child("ig").getValue(String.class);
-                        String fb = wall.child("fb").getValue(String.class);
-                        String url = wall.child("url").getValue(String.class);
+                    for(DataSnapshot hadistSnapshot : cat.getChildren()){
+                        String id = hadistSnapshot.getKey();
+                        String noHadist = hadistSnapshot.child("no_hadist").getValue(String.class);
+                        String jHadist = hadistSnapshot.child("judul").getValue(String.class);
+                        String hadistDari = hadistSnapshot.child("hadist_dr").getValue(String.class);
+                        String hadistIsi = hadistSnapshot.child("hadist_isi").getValue(String.class);
+                        String terjDari = hadistSnapshot.child("terj_dr").getValue(String.class);
+                        String terjIsi = hadistSnapshot.child("terj_isi").getValue(String.class);
+                        String faedah = hadistSnapshot.child("faedah").getValue(String.class);
 
-                        Wallpaper w = new Wallpaper(id, title, desc, ig, fb, url, cat.getKey());
-                        w.isFav = true;
-                        favWallpaper.add(w);
+                        IsiHadist had = new IsiHadist(id, noHadist, jHadist, hadistDari, hadistIsi, terjDari, terjIsi, faedah,  cat.getKey());
+                        had.isFav = true;
+                        favWallpaper.add(had);
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -111,6 +115,16 @@ public class FavQuoteFragment extends Fragment {
         });
 
 
+    }
+
+    public static class UtilityHadist {
+
+        public static int calculateNoOfColumns(Context context) {
+            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+            int noOfColumns = (int) (dpWidth / 200);
+            return noOfColumns;
+        }
     }
 
 }

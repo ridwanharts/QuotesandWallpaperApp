@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.Utility;
 import com.labs.jangkriek.qoutesandwallpaper.adapter.QuoteAdapter;
-import com.labs.jangkriek.qoutesandwallpaper.model.Wallpaper;
+import com.labs.jangkriek.qoutesandwallpaper.model.IsiQuote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,8 @@ import java.util.List;
 public class DetilCatQuoteActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    List<Wallpaper> wallpaperList;
-    List<Wallpaper> favList;
+    List<IsiQuote> isiQuoteList;
+    List<IsiQuote> favList;
     QuoteAdapter adapter;
     DatabaseReference dbWallpaper, dbFav;
     ProgressBar progressBar;
@@ -105,7 +105,7 @@ public class DetilCatQuoteActivity extends AppCompatActivity {
         TextView tvCatDetail = findViewById(R.id.tv_cat_detil);
         tvCatDetail.setText(category.toUpperCase());
 
-        wallpaperList = new ArrayList<>();
+        isiQuoteList = new ArrayList<>();
         favList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view2);
         recyclerView.setHasFixedSize(true);
@@ -113,7 +113,7 @@ public class DetilCatQuoteActivity extends AppCompatActivity {
         mNoOfColumns = Utility.calculateNoOfColumns(getApplicationContext());
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, mNoOfColumns));
-        adapter = new QuoteAdapter(this, wallpaperList);
+        adapter = new QuoteAdapter(this, isiQuoteList);
         progressBar = findViewById(R.id.pb2);
         recyclerView.setAdapter(adapter);
         dbWallpaper = FirebaseDatabase.getInstance().getReference("images").child(category);
@@ -152,7 +152,7 @@ public class DetilCatQuoteActivity extends AppCompatActivity {
                         String url = wallpaperSnapshot.child("url").getValue(String.class);
 
 
-                        Wallpaper wall = new Wallpaper(id, title, desc, url, ig, fb,  category);
+                        IsiQuote wall = new IsiQuote(id, title, desc, url, ig, fb,  category);
                         favList.add(wall);
 
                     }
@@ -189,12 +189,12 @@ public class DetilCatQuoteActivity extends AppCompatActivity {
 
 
 
-                        Wallpaper wall = new Wallpaper(id, title, desc, ig, fb, url, category);
+                        IsiQuote wall = new IsiQuote(id, title, desc, ig, fb, url, category);
                         if (isFav(wall)){
                             wall.isFav = true;
 
                         }
-                        wallpaperList.add(wall);
+                        isiQuoteList.add(wall);
 
                     }
                     adapter.notifyDataSetChanged();
@@ -210,8 +210,8 @@ public class DetilCatQuoteActivity extends AppCompatActivity {
 
     }
 
-    private boolean isFav(Wallpaper wall){
-        for(Wallpaper f : favList){
+    private boolean isFav(IsiQuote wall){
+        for(IsiQuote f : favList){
             if(f.id.equals(wall.id)){
 
                 return true;

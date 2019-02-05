@@ -1,7 +1,5 @@
 package com.labs.jangkriek.qoutesandwallpaper.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,8 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 import com.labs.jangkriek.qoutesandwallpaper.Utility;
-import com.labs.jangkriek.qoutesandwallpaper.adapter.CategoriesAdapter;
-import com.labs.jangkriek.qoutesandwallpaper.model.Category;
+import com.labs.jangkriek.qoutesandwallpaper.adapter.CategoriesQuoteAdapter;
+import com.labs.jangkriek.qoutesandwallpaper.model.Quote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +28,9 @@ public class QuoteFragment extends Fragment {
 
     private ProgressBar progressBar;
     private DatabaseReference dbCategories;
-    private List<Category> categoryList;
+    private List<Quote> quoteList;
     private RecyclerView recyclerView;
-    private CategoriesAdapter categoriesAdapter;
+    private CategoriesQuoteAdapter categoriesQuoteAdapter;
     private int mNoOfColumns;
 
     public QuoteFragment() {
@@ -59,9 +57,9 @@ public class QuoteFragment extends Fragment {
         mNoOfColumns = Utility.calculateNoOfColumns(getActivity());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), mNoOfColumns));
 
-        categoryList = new ArrayList<>();
-        categoriesAdapter = new CategoriesAdapter(getActivity(), categoryList);
-        recyclerView.setAdapter(categoriesAdapter);
+        quoteList = new ArrayList<>();
+        categoriesQuoteAdapter = new CategoriesQuoteAdapter(getActivity(), quoteList);
+        recyclerView.setAdapter(categoriesQuoteAdapter);
 
         dbCategories = FirebaseDatabase.getInstance().getReference("categories");
         dbCategories.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -77,10 +75,10 @@ public class QuoteFragment extends Fragment {
                         String ig = ds.child("ig").getValue(String.class);
                         String fb = ds.child("fb").getValue(String.class);
 
-                        Category cat = new Category(name, desc, thumb, ig, fb);
-                        categoryList.add(cat);
+                        Quote cat = new Quote(name, desc, thumb, ig, fb);
+                        quoteList.add(cat);
                     }
-                    categoriesAdapter.notifyDataSetChanged();
+                    categoriesQuoteAdapter.notifyDataSetChanged();
                 }
             }
 

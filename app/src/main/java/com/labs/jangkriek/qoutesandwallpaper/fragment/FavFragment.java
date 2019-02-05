@@ -13,9 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.labs.jangkriek.qoutesandwallpaper.FavHadistFragment;
-import com.labs.jangkriek.qoutesandwallpaper.FavQuoteFragment;
-import com.labs.jangkriek.qoutesandwallpaper.FavQuranFragment;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inFragment.FavHadistFragment;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inFragment.FavQuoteFragment;
 import com.labs.jangkriek.qoutesandwallpaper.R;
 
 
@@ -69,7 +68,7 @@ public class FavFragment extends Fragment implements BottomNavigationView.OnNavi
         fragmentTransaction.replace(R.id.content_main, fr).commit();
     }
 
-    /*List<Wallpaper> favWallpaper;
+    /*List<IsiQuote> favWallpaper;
     RecyclerView recyclerView;
     ProgressBar pb;
     QuoteAdapter adapter;
@@ -126,7 +125,7 @@ public class FavFragment extends Fragment implements BottomNavigationView.OnNavi
                         String fb = wall.child("fb").getValue(String.class);
                         String url = wall.child("url").getValue(String.class);
 
-                        Wallpaper w = new Wallpaper(id, title, desc, ig, fb, url, cat.getKey());
+                        IsiQuote w = new IsiQuote(id, title, desc, ig, fb, url, cat.getKey());
                         w.isFav = true;
                         favWallpaper.add(w);
                     }

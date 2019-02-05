@@ -1,4 +1,4 @@
-package com.labs.jangkriek.qoutesandwallpaper;
+package com.labs.jangkriek.qoutesandwallpaper.fragment.inFragment;
 
 
 import android.os.Bundle;
@@ -19,11 +19,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.labs.jangkriek.qoutesandwallpaper.R;
+import com.labs.jangkriek.qoutesandwallpaper.Utility;
 import com.labs.jangkriek.qoutesandwallpaper.adapter.FavAdapter;
-import com.labs.jangkriek.qoutesandwallpaper.adapter.FavHadistAdapter;
 import com.labs.jangkriek.qoutesandwallpaper.fragment.SettingFragment;
-import com.labs.jangkriek.qoutesandwallpaper.model.IsiHadist;
-import com.labs.jangkriek.qoutesandwallpaper.model.Wallpaper;
+import com.labs.jangkriek.qoutesandwallpaper.model.IsiQuote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +32,10 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavHadistFragment extends Fragment {
+public class FavQuoteFragment extends Fragment {
 
-    List<IsiHadist> favWallpaper;
-    RecyclerView recyclerView;
-    ProgressBar pb;
-    FavHadistAdapter adapter;
-    DatabaseReference dbFav;
-    int mNoOfColumns;
 
-    public FavHadistFragment() {
+    public FavQuoteFragment() {
         // Required empty public constructor
     }
 
@@ -50,17 +44,24 @@ public class FavHadistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fav_belajar, container, false);
+        return inflater.inflate(R.layout.fragment_fav_quote, container, false);
     }
+
+    List<IsiQuote> favIsiQuote;
+    RecyclerView recyclerView;
+    ProgressBar pb;
+    FavAdapter adapter;
+    DatabaseReference dbFav;
+    int mNoOfColumns;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        favWallpaper = new ArrayList<>();
-        recyclerView = view.findViewById(R.id.recycler_view_fav_hadist);
-        pb = view.findViewById(R.id.pb_fav_hadist);
-        adapter = new FavHadistAdapter(getActivity(), favWallpaper);
+        favIsiQuote = new ArrayList<>();
+        recyclerView = view.findViewById(R.id.recycler_view3);
+        pb = view.findViewById(R.id.pb3);
+        adapter = new FavAdapter(getActivity(), favIsiQuote);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -80,7 +81,7 @@ public class FavHadistFragment extends Fragment {
 
         dbFav = FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("hadist_favourites");
+                .child("favourites");
 
         pb.setVisibility(View.VISIBLE);
 
@@ -89,19 +90,17 @@ public class FavHadistFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 pb.setVisibility(View.INVISIBLE);
                 for(DataSnapshot cat : dataSnapshot.getChildren()){
-                    for(DataSnapshot hadistSnapshot : cat.getChildren()){
-                        String id = hadistSnapshot.getKey();
-                        String noHadist = hadistSnapshot.child("no_hadist").getValue(String.class);
-                        String jHadist = hadistSnapshot.child("judul").getValue(String.class);
-                        String hadistDari = hadistSnapshot.child("hadist_dr").getValue(String.class);
-                        String hadistIsi = hadistSnapshot.child("hadist_isi").getValue(String.class);
-                        String terjDari = hadistSnapshot.child("terj_dr").getValue(String.class);
-                        String terjIsi = hadistSnapshot.child("terj_isi").getValue(String.class);
-                        String faedah = hadistSnapshot.child("faedah").getValue(String.class);
+                    for(DataSnapshot wall : cat.getChildren()){
+                        String id = wall.getKey();
+                        String title = wall.child("title").getValue(String.class);
+                        String desc = wall.child("desc").getValue(String.class);
+                        String ig = wall.child("ig").getValue(String.class);
+                        String fb = wall.child("fb").getValue(String.class);
+                        String url = wall.child("url").getValue(String.class);
 
-                        IsiHadist had = new IsiHadist(id, noHadist, jHadist, hadistDari, hadistIsi, terjDari, terjIsi, faedah ,  cat.getKey());
-                        had.isFav = true;
-                        favWallpaper.add(had);
+                        IsiQuote w = new IsiQuote(id, title, desc, ig, fb, url, cat.getKey());
+                        w.isFav = true;
+                        favIsiQuote.add(w);
                     }
                 }
                 adapter.notifyDataSetChanged();

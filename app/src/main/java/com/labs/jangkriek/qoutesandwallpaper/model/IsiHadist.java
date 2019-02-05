@@ -7,7 +7,7 @@ public class IsiHadist {
     @Exclude
     public String id;
 
-    public String noHadist, judulHadist, hadistDari, hadistIsi, terjDari, terIsi, faedah;
+    public String no_hadist, judul, hadist_dr, hadist_isi, terj_dr, terj_isi, faedah;
 
     @Exclude
     public String category;
@@ -16,14 +16,14 @@ public class IsiHadist {
     public boolean isFav = false;
 
 
-    public IsiHadist(String id, String noHadist, String judulHadist, String hadistDari, String hadistIsi, String terjDari, String terIsi, String faedah, String category) {
+    public IsiHadist(String id, String no_hadist, String judul, String hadist_dr, String hadist_isi, String terj_dr, String terj_isi, String faedah, String category) {
         this.id = id;
-        this.noHadist = noHadist;
-        this.judulHadist = judulHadist;
-        this.hadistDari = hadistDari;
-        this.hadistIsi = hadistIsi;
-        this.terjDari = terjDari;
-        this.terIsi = terIsi;
+        this.no_hadist = no_hadist;
+        this.judul = judul;
+        this.hadist_dr = hadist_dr;
+        this.hadist_isi = hadist_isi;
+        this.terj_dr = terj_dr;
+        this.terj_isi = terj_isi;
         this.faedah = faedah;
         this.category = category;
     }

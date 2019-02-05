@@ -10,23 +10,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.labs.jangkriek.qoutesandwallpaper.R;
-import com.labs.jangkriek.qoutesandwallpaper.activities.DetilCatHadistActivity;
-import com.labs.jangkriek.qoutesandwallpaper.model.Hadist;
+import com.labs.jangkriek.qoutesandwallpaper.activities.DetilCatQuoteActivity;
+import com.labs.jangkriek.qoutesandwallpaper.model.Quote;
 
 import java.util.List;
 
-public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadistAdapter.CategoryViewHolder> {
+public class CategoriesQuoteAdapter extends RecyclerView.Adapter<CategoriesQuoteAdapter.CategoryViewHolder> {
 
     private Context context;
-    private List<Hadist> hadistList;
+    private List<Quote> quoteList;
     private InterstitialAd mInterstitialAd;
 
-    public CategoriesHadistAdapter(Context context, List<Hadist> hadists) {
+    public CategoriesQuoteAdapter(Context context, List<Quote> quoteList) {
         this.context = context;
-        this.hadistList = hadists;
+        this.quoteList = quoteList;
 
         mInterstitialAd = new InterstitialAd(context);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
@@ -34,22 +36,25 @@ public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadi
     }
 
     @Override
-    public CategoriesHadistAdapter.CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public CategoriesQuoteAdapter.CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.item_cat_hadist, viewGroup, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_cat_quote, viewGroup, false);
         return new CategoryViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(CategoriesHadistAdapter.CategoryViewHolder categoryViewHolder, int i) {
-        Hadist cat = hadistList.get(i);
-        categoryViewHolder.tvName.setText(cat.jHadist);
+    public void onBindViewHolder(CategoriesQuoteAdapter.CategoryViewHolder categoryViewHolder, int i) {
+        Quote cat = quoteList.get(i);
+        categoryViewHolder.tvName.setText(cat.name);
+        RequestOptions myOptions = new RequestOptions()
+                .centerCrop();
+        Glide.with(context).asBitmap().apply(myOptions).load(cat.thumb).into(categoryViewHolder.ivThumb);
 
     }
 
     @Override
     public int getItemCount() {
-        return hadistList.size();
+        return quoteList.size();
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -59,7 +64,8 @@ public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadi
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.txt_view_cat_hadist);
+            tvName = itemView.findViewById(R.id.txt_view_cat_name);
+            ivThumb = itemView.findViewById(R.id.iv_imagevcat);
             itemView.setOnClickListener(this);
         }
 
@@ -73,10 +79,13 @@ public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadi
             }*/
 
             int pos = getAdapterPosition();
-            Hadist cat = hadistList.get(pos);
-            Intent i = new Intent(context, DetilCatHadistActivity.class);
+            Quote cat = quoteList.get(pos);
+            Intent i = new Intent(context, DetilCatQuoteActivity.class);
 
-            i.putExtra("category", cat.jHadist);
+            i.putExtra("category", cat.name);
+            i.putExtra("logo", cat.thumb);
+            i.putExtra("ig", cat.ig);
+            i.putExtra("fb", cat.fb);
             context.startActivity(i);
         }
     }
