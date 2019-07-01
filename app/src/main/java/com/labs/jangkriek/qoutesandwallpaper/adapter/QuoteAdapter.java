@@ -29,6 +29,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -49,6 +51,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.WallViewHold
     private Context context;
     private List<IsiQuote> isiQuoteList;
     private ProgressBar progressBar;
+    private InterstitialAd mInterstitialAd;
 
     public QuoteAdapter(Context context, List<IsiQuote> isiQuoteList) {
         this.context = context;
@@ -60,6 +63,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.WallViewHold
     public QuoteAdapter.WallViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View v = LayoutInflater.from(context).inflate(R.layout.item_quote, viewGroup, false);
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId("");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
         return new QuoteAdapter.WallViewHolder(v);
     }
 
@@ -108,6 +114,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.WallViewHold
         @Override
         public void onClick(View v) {
 
+            int pos = getAdapterPosition();
+            IsiQuote img = isiQuoteList.get(pos);
+
             switch(v.getId()){
                 case R.id.share_button:
                     shareWallpaper(isiQuoteList.get(getAdapterPosition()));
@@ -116,14 +125,19 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.WallViewHold
                 case R.id.download_button:
                     downloadWallpaper(isiQuoteList.get(getAdapterPosition()));
                     Toast.makeText(context, "Download complete", Toast.LENGTH_SHORT).show();
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    }
                     break;
+                case R.id.iv_imagevwall:
+                    Intent i = new Intent(context, FullscreenImageActivity.class);
+                    i.putExtra("image", img.url);
+                    i.putExtra("idActivity", "quote");
+                    context.startActivity(i);
             }
-            int pos = getAdapterPosition();
-            IsiQuote img = isiQuoteList.get(pos);
-            Intent i = new Intent(context, FullscreenImageActivity.class);
-            i.putExtra("image", img.url);
-            i.putExtra("idActivity", "quote");
-            context.startActivity(i);
+
 
         }
 
@@ -137,7 +151,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.WallViewHold
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("image/*");
                             i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(resource));
-                            context.startActivity(Intent.createChooser(i, "Quotes App"));
+                            context.startActivity(Intent.createChooser(i, "Quote Wallpaper Islam"));
 
                         }
                     });
@@ -152,8 +166,8 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.WallViewHold
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             Intent i = new Intent(Intent.ACTION_VIEW);
-                            Uri uri = Uri.parse(saveWallpaper(resource, isiQuote.id));
                             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            Uri uri = Uri.parse(saveWallpaper(resource, isiQuote.id));
 
                             if (uri != null) {
                                 //saveWallpaper(resource, isiQuote.id);
@@ -186,7 +200,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.WallViewHold
             String imageFileName = "JPEG_" + id + ".jpg";
             File storageDir = new File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                            + "/QuotesApp");
+                            + "/Quotes");
             boolean success = true;
             if (!storageDir.exists()) {
                 success = storageDir.mkdirs();

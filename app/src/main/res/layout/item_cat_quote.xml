@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="100dp"
+    android:layout_height="150dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_margin="3dp"
     android:focusable="true"
@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_imagevcat"
@@ -20,9 +20,9 @@
             android:scaleType="fitXY" />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:id="@+id/txt_view_cat_name"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textSize="14sp"
             android:text="Category"
             android:textColor="#FFF"
             android:gravity="center_vertical"

@@ -13,9 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.labs.jangkriek.qoutesandwallpaper.fragment.inFragment.FavHadistFragment;
-import com.labs.jangkriek.qoutesandwallpaper.fragment.inFragment.FavQuoteFragment;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inFavFragment.FavGamWallFragment;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inFavFragment.FavHadistFragment;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inFavFragment.FavQuoteFragment;
 import com.labs.jangkriek.qoutesandwallpaper.R;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inHomeFragment.QuoteFragment;
 
 
 /**
@@ -49,9 +51,9 @@ public class FavFragment extends Fragment implements BottomNavigationView.OnNavi
             case R.id.nav_quote:
                 fr = new FavQuoteFragment();
                 break;
-            /*case R.id.nav_quran:
-                fr = new FavQuranFragment();
-                break;*/
+            case R.id.nav_quran:
+                fr = new FavGamWallFragment();
+                break;
             case R.id.nav_hadist:
                 fr = new FavHadistFragment();
                 break;

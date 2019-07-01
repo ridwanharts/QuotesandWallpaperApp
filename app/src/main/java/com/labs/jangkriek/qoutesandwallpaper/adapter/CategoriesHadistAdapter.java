@@ -29,7 +29,7 @@ public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadi
         this.hadistList = hadists;
 
         mInterstitialAd = new InterstitialAd(context);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
@@ -54,7 +54,7 @@ public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadi
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView tvName;
+        TextView tvName, tvDesk;
         ImageView ivThumb;
 
         public CategoryViewHolder(@NonNull View itemView) {
@@ -77,6 +77,7 @@ public class CategoriesHadistAdapter extends RecyclerView.Adapter<CategoriesHadi
             Intent i = new Intent(context, DetilCatHadistActivity.class);
 
             i.putExtra("category", cat.jHadist);
+            i.putExtra("desk", cat.desc);
             context.startActivity(i);
         }
     }

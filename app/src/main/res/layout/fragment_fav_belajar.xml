@@ -3,11 +3,12 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".fragment.inFragment.FavHadistFragment">
+tools:context=".fragment.inFavFragment.FavHadistFragment">
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/recycler_view_fav_hadist"
     android:layout_width="match_parent"
+    android:layout_marginBottom="5dp"
     android:layout_height="match_parent">
 
 </android.support.v7.widget.RecyclerView>

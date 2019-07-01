@@ -29,6 +29,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -51,6 +53,7 @@ public class FavGamWallAdapter extends RecyclerView.Adapter<FavGamWallAdapter.Wa
     private Context context;
     private List<IsiGamWall> isiGamWallList;
     private ProgressBar progressBar;
+    private InterstitialAd mInterstitialAd;
 
     public FavGamWallAdapter(Context context, List<IsiGamWall> isiGamWallList) {
         this.context = context;
@@ -62,6 +65,9 @@ public class FavGamWallAdapter extends RecyclerView.Adapter<FavGamWallAdapter.Wa
     public FavGamWallAdapter.WallViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View v = LayoutInflater.from(context).inflate(R.layout.item_fav_gamwall, viewGroup, false);
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId("");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
         return new FavGamWallAdapter.WallViewHolder(v);
     }
 
@@ -109,33 +115,40 @@ public class FavGamWallAdapter extends RecyclerView.Adapter<FavGamWallAdapter.Wa
         @Override
         public void onClick(View v) {
 
+            int pos = getAdapterPosition();
+            IsiGamWall img = isiGamWallList.get(pos);
+
             switch(v.getId()){
-                case R.id.fav_share_button:
+                case R.id.gamwall_fav_share_button:
                     shareWallpaper(isiGamWallList.get(getAdapterPosition()));
                     Toast.makeText(context, "Share quote", Toast.LENGTH_SHORT).show();
                     break;
-                case R.id.fav_download_button:
+                case R.id.gamwall_fav_download_button:
                     downloadWallpaper(isiGamWallList.get(getAdapterPosition()));
                     Toast.makeText(context, "Download complete", Toast.LENGTH_SHORT).show();
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    }
                     break;
-                case R.id.fav_fav_button:
-                    Toast.makeText(context, "Add to favourite", Toast.LENGTH_SHORT).show();
+                case R.id.gamwall_fav_iv_imagevwall:
+                    Intent i = new Intent(context, FullscreenGamWallActivity.class);
+                    i.putExtra("image", img.url);
+                    i.putExtra("imagefull", img.url1);
+                    i.putExtra("idActivity", "fav");
+                    context.startActivity(i);
                     break;
             }
 
-            int pos = getAdapterPosition();
-            IsiGamWall img = isiGamWallList.get(pos);
-            Intent i = new Intent(context, FullscreenGamWallActivity.class);
-            i.putExtra("image", img.url);
-            i.putExtra("idActivity", "fav");
-            context.startActivity(i);
+
 
         }
 
         private void shareWallpaper(IsiGamWall w) {
             RequestOptions myOptions = new RequestOptions()
                     .centerCrop();
-            Glide.with(context).asBitmap().apply(myOptions).load(w.url)
+            Glide.with(context).asBitmap().apply(myOptions).load(w.url1)
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -146,13 +159,14 @@ public class FavGamWallAdapter extends RecyclerView.Adapter<FavGamWallAdapter.Wa
 
                         }
                     });
+
         }
 
         private void downloadWallpaper(final IsiGamWall isiQuote){
 
             RequestOptions myOptions = new RequestOptions()
                     .centerCrop();
-            Glide.with(context).asBitmap().apply(myOptions).load(isiQuote.url)
+            Glide.with(context).asBitmap().apply(myOptions).load(isiQuote.url1)
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -252,16 +266,19 @@ public class FavGamWallAdapter extends RecyclerView.Adapter<FavGamWallAdapter.Wa
 
             DatabaseReference dbFav = FirebaseDatabase.getInstance().getReference("users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .child("gamWallfavourites")
+                    .child("gamwall_favourites")
                     .child(wall.category);
 
 
             if(isChecked){
                 dbFav.child(wall.id).setValue(wall);
+
             }else {
                 dbFav.child(wall.id).setValue(null);
                 Toast.makeText(context, "remove from favourite", Toast.LENGTH_SHORT).show();
+
             }
+
 
         }
     }

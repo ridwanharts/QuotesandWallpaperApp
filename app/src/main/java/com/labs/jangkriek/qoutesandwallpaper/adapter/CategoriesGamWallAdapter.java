@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.labs.jangkriek.qoutesandwallpaper.R;
+import com.labs.jangkriek.qoutesandwallpaper.activities.DetilCatGamWallActivity;
 import com.labs.jangkriek.qoutesandwallpaper.activities.DetilCatQuoteActivity;
 import com.labs.jangkriek.qoutesandwallpaper.model.GamWall;
 import com.labs.jangkriek.qoutesandwallpaper.model.Quote;
@@ -32,14 +33,14 @@ public class CategoriesGamWallAdapter extends RecyclerView.Adapter<CategoriesGam
         this.gamWallList = gamWallList;
 
         mInterstitialAd = new InterstitialAd(context);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
     @Override
     public CategoriesGamWallAdapter.CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.item_cat_quote, viewGroup, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_cat_gamwall, viewGroup, false);
         return new CategoriesGamWallAdapter.CategoryViewHolder(v);
     }
 
@@ -65,8 +66,8 @@ public class CategoriesGamWallAdapter extends RecyclerView.Adapter<CategoriesGam
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.txt_view_cat_name);
-            ivThumb = itemView.findViewById(R.id.iv_imagevcat);
+            tvName = itemView.findViewById(R.id.gw_txt_view_cat_name);
+            ivThumb = itemView.findViewById(R.id.gw_iv_imagevcat);
             itemView.setOnClickListener(this);
         }
 
@@ -81,7 +82,7 @@ public class CategoriesGamWallAdapter extends RecyclerView.Adapter<CategoriesGam
 
             int pos = getAdapterPosition();
             GamWall cat = gamWallList.get(pos);
-            Intent i = new Intent(context, DetilCatQuoteActivity.class);
+            Intent i = new Intent(context, DetilCatGamWallActivity.class);
 
             i.putExtra("category", cat.name);
             i.putExtra("logo", cat.thumb);

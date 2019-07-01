@@ -29,6 +29,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -49,6 +51,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
     private Context context;
     private List<IsiQuote> isiQuoteList;
     private ProgressBar progressBar;
+    private InterstitialAd mInterstitialAd;
 
     public FavAdapter(Context context, List<IsiQuote> isiQuoteList) {
         this.context = context;
@@ -60,6 +63,9 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
     public FavAdapter.WallViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View v = LayoutInflater.from(context).inflate(R.layout.item_fav_quotes, viewGroup, false);
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId("");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
         return new FavAdapter.WallViewHolder(v);
     }
 
@@ -107,6 +113,9 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
         @Override
         public void onClick(View v) {
 
+            int pos = getAdapterPosition();
+            IsiQuote img = isiQuoteList.get(pos);
+
             switch(v.getId()){
                 case R.id.fav_share_button:
                     shareWallpaper(isiQuoteList.get(getAdapterPosition()));
@@ -115,18 +124,22 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
                 case R.id.fav_download_button:
                     downloadWallpaper(isiQuoteList.get(getAdapterPosition()));
                     Toast.makeText(context, "Download complete", Toast.LENGTH_SHORT).show();
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    }
                     break;
-                case R.id.fav_fav_button:
-                        Toast.makeText(context, "Add to favourite", Toast.LENGTH_SHORT).show();
+                case R.id.fav_iv_imagevwall:
+                    Intent i = new Intent(context, FullscreenImageActivity.class);
+                    i.putExtra("image", img.url);
+                    i.putExtra("idActivity", "fav");
+                    context.startActivity(i);
                     break;
             }
 
-            int pos = getAdapterPosition();
-            IsiQuote img = isiQuoteList.get(pos);
-            Intent i = new Intent(context, FullscreenImageActivity.class);
-            i.putExtra("image", img.url);
-            i.putExtra("idActivity", "fav");
-            context.startActivity(i);
+
+
 
         }
 
@@ -189,7 +202,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
             String imageFileName = "JPEG_" + id + ".jpg";
             File storageDir = new File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                            + "/QuotesApp");
+                            + "/SobatHijrah/Quotes");
             boolean success = true;
             if (!storageDir.exists()) {
                 success = storageDir.mkdirs();
@@ -239,6 +252,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+            //login dulu untuk save favourite
             if(FirebaseAuth.getInstance().getCurrentUser()==null){
                 Toast.makeText(context, "Please login first...", Toast.LENGTH_SHORT).show();
                 buttonView.setChecked(false);
@@ -256,10 +270,12 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.WallViewHolder> 
 
             if(isChecked){
                 dbFav.child(wall.id).setValue(wall);
+
             }else {
                 dbFav.child(wall.id).setValue(null);
                 Toast.makeText(context, "remove from favourite", Toast.LENGTH_SHORT).show();
             }
+
 
         }
     }

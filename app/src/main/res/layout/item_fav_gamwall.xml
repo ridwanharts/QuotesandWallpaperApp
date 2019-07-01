@@ -72,7 +72,8 @@
                     android:layout_height="25dp"
                     android:padding="1dp"
                     android:id="@+id/gamwall_fav_fav_button"
-                    android:button="@drawable/custom_checkbox"/>
+                    android:buttonTint="@color/white"
+                    android:theme="@style/MyCheckBox"/>
 
                 <ImageButton
                     android:layout_width="20dp"

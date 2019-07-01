@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.labs.jangkriek.qoutesandwallpaper.R;
+
+import java.util.Objects;
 
 public class SettingFragment extends Fragment {
 
@@ -59,6 +63,9 @@ public class SettingFragment extends Fragment {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             Glide.with(getActivity()).load(user.getPhotoUrl().toString()).into(ivUserImage);
             tvUsername.setText(user.getDisplayName());
+
+            SpannableString customText = new SpannableString(user.getEmail());
+            customText.setSpan(new RelativeSizeSpan(.1f), 0, 3, 0);
             tvEmail.setText(user.getEmail());
 
             view.findViewById(R.id.logout_google).setOnClickListener(new View.OnClickListener(){
@@ -118,7 +125,7 @@ public class SettingFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Login Successfull", Toast.LENGTH_SHORT).show();
-                    getActivity().getSupportFragmentManager()
+                    Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.content_main, new SettingFragment())
                     .commit();

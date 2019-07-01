@@ -31,7 +31,7 @@ public class CategoriesQuoteAdapter extends RecyclerView.Adapter<CategoriesQuote
         this.quoteList = quoteList;
 
         mInterstitialAd = new InterstitialAd(context);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 

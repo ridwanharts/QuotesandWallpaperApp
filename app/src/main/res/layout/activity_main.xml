@@ -46,10 +46,11 @@
                         android:layout_height="48dp"
                         android:layout_marginRight="8dp"
                         android:padding="8dp"
+                        android:id="@+id/ceklist"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_verified_user"/>
+                        app:srcCompat="@drawable/ic_verified_user"/>
                 </RelativeLayout>
 
 

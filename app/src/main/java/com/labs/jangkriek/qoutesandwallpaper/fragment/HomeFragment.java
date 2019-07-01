@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.labs.jangkriek.qoutesandwallpaper.R;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inHomeFragment.GamWallFragment;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inHomeFragment.HadistFragment;
+import com.labs.jangkriek.qoutesandwallpaper.fragment.inHomeFragment.QuoteFragment;
 
 
 /**
@@ -50,10 +53,10 @@ public class HomeFragment extends Fragment implements BottomNavigationView.OnNav
                 fr = new QuoteFragment();
                 break;
             case R.id.nav_quran:
-                fr = new JadwalKajianFragment();
+                fr = new GamWallFragment();
                 break;
             case R.id.nav_hadist:
-                fr = new BelajarFragment();
+                fr = new HadistFragment();
                 break;
         }
         showFragment(fr);

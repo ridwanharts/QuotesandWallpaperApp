@@ -15,7 +15,6 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/ic_verified_user"
             android:layout_gravity="center"
             android:id="@+id/iv_user"/>
 
@@ -86,22 +85,13 @@
             android:theme="@style/Base.CardView" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:text="Jangkriek Labs"
-            android:layout_height="wrap_content" />
-
-        <TextView
             android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:text="Made with -❤- at Jogja"
+            android:text="Made with ❤ at Jogja"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

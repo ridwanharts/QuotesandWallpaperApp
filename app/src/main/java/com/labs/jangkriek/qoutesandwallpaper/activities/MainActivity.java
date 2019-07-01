@@ -1,5 +1,6 @@
 package com.labs.jangkriek.qoutesandwallpaper.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -7,11 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.MobileAds;
+import com.labs.jangkriek.qoutesandwallpaper.AmalanRutinActivity;
 import com.labs.jangkriek.qoutesandwallpaper.fragment.FavFragment;
 import com.labs.jangkriek.qoutesandwallpaper.fragment.HomeFragment;
 import com.labs.jangkriek.qoutesandwallpaper.R;
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     BottomNavigationView bottomNavigationView;
     TextView tvTitle;
     RelativeLayout rel;
+    ImageView ivCeklist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +34,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         MobileAds.initialize(this,
-                "ca-app-pub-2732887939805010~5353004466");
+                "ca-app-pub-3940256099942544~3347511713");
 
         tvTitle = findViewById(R.id.titleAtas);
+        ivCeklist = findViewById(R.id.ceklist);
+        ivCeklist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), AmalanRutinActivity.class);
+                startActivity(i);
+            }
+        });
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         showFragment(new HomeFragment());
@@ -45,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (menuItem.getItemId()){
             case R.id.nav_home:
                 fr = new HomeFragment();
-                tvTitle.setText("Sobat Hijrah");
+                tvTitle.setText("Quote Wallpaper Islam");
                 //rel.setBackgroundResource(R.drawable.bggradient);
                 break;
             case R.id.nav_fav:

@@ -1,0 +1,65 @@
+{
+  "project_info": {
+    "project_number": "1007733089366",
+    "firebase_url": "https://wallpaperapp-45a5d.firebaseio.com",
+    "project_id": "wallpaperapp-45a5d",
+    "storage_bucket": "wallpaperapp-45a5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007733089366:android:b43813b31e2f0918",
+        "android_client_info": {
+          "package_name": "com.labs.jangkriek.qoutesandwallpaper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007733089366-c4b45fvrpbb648v0gilrneqn8tfgenbv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.labs.jangkriek.qoutesandwallpaper",
+            "certificate_hash": "91960b148ec939b813de1a06899cce6d5a54e183"
+          }
+        },
+        {
+          "client_id": "1007733089366-cpbb8q1hbpbkbdghoep8p1cc775gb58f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.labs.jangkriek.qoutesandwallpaper",
+            "certificate_hash": "e5a5444ffa1889fbb30bcf85a262bf472693b660"
+          }
+        },
+        {
+          "client_id": "1007733089366-1rras5kgijgi93bd39sfh4au7mqipu8u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.labs.jangkriek.qoutesandwallpaper",
+            "certificate_hash": "62b962f6ce232898004dcb0207be2499e6cc0a62"
+          }
+        },
+        {
+          "client_id": "1007733089366-f4k0n8oh1pk3afk2i637adteljop3f78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA67Rc4YCZtn_ZBVs7hvCGbGY622Nm5L_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007733089366-f4k0n8oh1pk3afk2i637adteljop3f78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-2732887939805010~5353004466"
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+
 
     <application
         android:allowBackup="true"
@@ -12,9 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-2732887939805010~5353004466" />
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
 
         <activity
             android:name=".activities.SplashScreen"
@@ -22,17 +26,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.MainActivity"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.DetilCatQuoteActivity"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -46,12 +52,31 @@
 
         <activity
             android:name=".activities.FullscreenImageActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".activities.Main2Activity" />
-        <activity android:name=".activities.DetilCatHadistActivity" />
-        <activity android:name=".activities.FullscreenHadist" />
-        <activity android:name=".activities.DetilCatGamWallActivity" />
-        <activity android:name=".activities.FullscreenGamWallActivity"></activity>
+
+        <activity
+            android:name=".activities.DetilCatHadistActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.FullscreenHadist"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DetilCatGamWallActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.FullscreenGamWallActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AmalanRutinActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_amalan_rutin"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

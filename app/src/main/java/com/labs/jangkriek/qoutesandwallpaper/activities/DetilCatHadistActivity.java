@@ -52,17 +52,21 @@ public class DetilCatHadistActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String category = intent.getStringExtra("category");
+        final String desk = intent.getStringExtra("desk");
 
         //Toast.makeText(DetilCatQuoteActivity.this, "link : " + thumb, Toast.LENGTH_SHORT).show();
 
         toolbar.setTitle(category);
         TextView tvCatDetail = findViewById(R.id.tv_cat_detil_hadist);
+        TextView tvCatDesk = findViewById(R.id.deskripsi_hadist);
         tvCatDetail.setText(category);
+        tvCatDesk.setText(desk);
 
         wallpaperList = new ArrayList<>();
         favList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view_hadist);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mNoOfColumns = UtilityHadist.calculateNoOfColumns(getApplicationContext());
 
