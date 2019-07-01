@@ -1,5 +1,5 @@
 # QuotesandWallpaperApp
-Android App with Firebase to save image and text
+Android App with Firebase to save image and text.
 
 **Screenshoot**
 
@@ -12,8 +12,14 @@ Android App with Firebase to save image and text
     </tr>
 </table>
 
-**Structure Project**
+**Feature Project**
 
+* Login with google account
+* Firebase integration
+* Save favourite user (login first)
+* Admob sample
+* Download image into devices
+* Share image accros app
 
 
 ```java
