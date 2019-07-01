@@ -1,7 +1,7 @@
 # QuotesandWallpaperApp
 Android App with Firebase to save image and text.
 
-**Screenshoot**
+## Screenshoot
 
 <table>
     <tr>
@@ -12,7 +12,7 @@ Android App with Firebase to save image and text.
     </tr>
 </table>
 
-**Feature Project**
+## Feature Project
 
 * Login with google account
 * Firebase integration
